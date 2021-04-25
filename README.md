@@ -1,4 +1,4 @@
-# python-workflow
+# project-watertemp
 
 **A boilerplate python development workflow with Docker, Git, Make, automatic
 testing, code formatting, codestyle check and more.**

@@ -5,24 +5,24 @@
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-build: ## Build based on Docker/Dockerfile and name it 'python-workflow'
-	docker build -t python-workflow -f Docker/Dockerfile .
+build: ## Build based on Docker/Dockerfile and name it 'project-watertemp'
+	docker build -t project-watertemp -f Docker/Dockerfile .
 
-build-dev: ## Build based on Docker/Dockerfile-dev and name it 'python-workflow-dev'
-	docker build -t python-workflow-dev -f Docker/Dockerfile-dev .
+build-dev: ## Build based on Docker/Dockerfile-dev and name it 'project-watertemp-dev'
+	docker build -t project-watertemp-dev -f Docker/Dockerfile-dev .
 
 shell: ## Start a development shell in docker with source code and tests mounted
 	docker run --rm -it\
 		-v `pwd`/:/app:rw \
-		--name python-workflow-shell \
-		python-workflow-dev \
+		--name project-watertemp-shell \
+		project-watertemp-dev \
 		/usr/bin/zsh
 
 dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest (dockerized)
 	docker run --rm \
 		-v `pwd`/:/app:rw \
-		--name python-workflow-test \
-		python-workflow-dev \
+		--name project-watertemp-test \
+		project-watertemp-dev \
 		/bin/bash -c \
 			"flake8 src tests; \
 			pytest"
@@ -40,8 +40,8 @@ format: ## Run flake8 syntax and codestyle check, then run tests with pytest
 dockerized-format: ## Format code with black, then run codestyle checks (dockerized)
 	docker run --rm \
 		-v `pwd`/:/app:rw \
-		--name python-workflow-test \
-		python-workflow-dev \
+		--name project-watertemp-test \
+		project-watertemp-dev \
 		/bin/bash -c \
 			"black src tests; \
 			flake8 src tests"

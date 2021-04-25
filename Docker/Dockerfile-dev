@@ -1,4 +1,4 @@
-FROM python-workflow
+FROM project-watertemp
 
 WORKDIR /app
 
