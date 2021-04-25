@@ -1,7 +1,7 @@
 # project-watertemp
 
-**A boilerplate python development workflow with Docker, Git, Make, automatic
-testing, code formatting, codestyle check and more.**
+**The goal of this project is to scrape and accumulate data on Hungarian
+natural water (rivers, lakes) temperatures.**
 
 ## Setup
 
