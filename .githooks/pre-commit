@@ -1,0 +1,26 @@
+#!/bin/bash
+current_branch=`git branch | grep '*' | sed 's/* //'`
+
+if [ "$current_branch" = "main" ]; then
+    echo "You are about to commit on master. I will run your tests first..."
+
+    if [[ "$OSTYPE" = "linux-gnu"* ]]; then # Linux (Docker)
+        make test
+    elif [[ "$OSTYPE" = "darwin"* ]]; then # Mac OSX
+        make dockerized-test
+    else
+        # OS is neither Mac nor Linux
+        echo "Your OS, '$OSTYPE' was not recognised. Handle your OS type case in .githooks/pre-commit. Exiting."
+        exit 1
+    fi
+
+    if [ $? -eq 0 ]; then
+        # tests passed, proceed to prepare commit message
+        exit 0
+    else
+        # some tests failed, prevent from committing broken code on master
+        echo "Some tests failed. You are not allowed to commit broken code on master! Aborting the commit."
+        echo "Note: you can still commit broken code on feature branches"
+        exit 1
+    fi
+fi

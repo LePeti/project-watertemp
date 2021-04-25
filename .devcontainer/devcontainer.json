@@ -1,0 +1,34 @@
+{
+    "name": "Using existing Dockerfile-dev",
+    // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+    "image": "python-workflow-dev",
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+        "terminal.integrated.shell.linux": "/usr/bin/zsh",
+        "python.pythonPath": "/usr/local/bin/python",
+        "jupyter.notebookFileRoot": "${workspaceFolder}/src"
+    },
+    "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
+    "workspaceFolder": "/app",
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "ms-vscode.sublime-keybindings",
+        "vscode-icons-team.vscode-icons",
+        "sleistner.vscode-fileutils",
+        "eamodio.gitlens",
+        "vtrois.gitmoji-vscode",
+        "ms-toolsai.jupyter",
+        "ms-python.python",
+        "njpwerner.autodocstring"
+    ],
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "uname -a",
+    // Uncomment to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
+    // "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+    // Uncomment when using a ptrace-based debugger like C++, Go, and Rust
+    // "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+    // Comment out connect as root instead. To add a non-root user, see: https://aka.ms/vscode-remote/containers/non-root.
+    // "remoteUser": "vscode"
+}

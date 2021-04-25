@@ -1,0 +1,28 @@
+# name of your pipeline
+name: deploy
+
+# define some actions filters, when this build should be triggered
+# here it is only triggered if a push is made on the master branch
+on:
+  push:
+    branches:
+      - main
+
+# define env vars
+# env:
+#   APP_NAME: name-of-your-app
+
+jobs:
+# TODO: implement this in the future: check which files have changed in the last push
+  # run build, but only if requirements.txt has changed
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build base image
+        run: make build
+      - name: Build dev image
+        run: make build-dev
+      - name: Test app
+        run: make dockerized-test
