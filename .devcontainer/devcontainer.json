@@ -1,12 +1,14 @@
 {
-    "name": "Using existing Dockerfile-dev",
+    "name": "project-watertemp-dev",
     // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
     "image": "project-watertemp-dev",
     // Set *default* container specific settings.json values on container create.
     "settings": {
         "terminal.integrated.shell.linux": "/usr/bin/zsh",
         "python.pythonPath": "/usr/local/bin/python",
-        "jupyter.notebookFileRoot": "${workspaceFolder}/src"
+        "jupyter.notebookFileRoot": "${workspaceFolder}/src",
+        // automatically reload changes made to imported files without having to restart the interactive session.
+        "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2"
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
     "workspaceFolder": "/app",
