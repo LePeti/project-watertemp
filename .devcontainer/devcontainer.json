@@ -8,7 +8,10 @@
         "python.pythonPath": "/usr/local/bin/python",
         "jupyter.notebookFileRoot": "${workspaceFolder}/src",
         // automatically reload changes made to imported files without having to restart the interactive session.
-        "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2"
+        "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2",
+        "python.formatting.blackArgs": [
+            "--line-length 79"
+        ]
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
     "workspaceFolder": "/app",
