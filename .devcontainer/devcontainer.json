@@ -10,7 +10,10 @@
         // automatically reload changes made to imported files without having to restart the interactive session.
         "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2",
         "python.formatting.blackArgs": [
-            "--line-length 79"
+            "--line-length 90"
+        ],
+        "python.linting.flake8Args": [
+            "--max-line-length 90"
         ]
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",

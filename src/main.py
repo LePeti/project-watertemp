@@ -13,9 +13,7 @@ page = requests.get(URL)
 time_of_scraping = datetime.now(timezone("CET")).strftime("%Y-%m-%d %H:%M:%S")
 
 soup = BeautifulSoup(page.content, "html.parser")
-date_published_text_hun = soup.find(
-    "p", text=re.compile("Kiadva.*")
-).get_text()
+date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
 date_published_hun = re.search(
     "\\d{1,4}\\. .+ \\d{1,2}\\.", date_published_text_hun
 ).group()
@@ -31,9 +29,10 @@ df_concat = pd.concat(dfs)
 df_concat["time_of_scraping_utc"] = time_of_scraping
 df_concat["date_published"] = date_pubished
 
+# black format linebreak at 79
 # Rename columns
 # Column values should only include numbers
+# Assertions
 # Testing
 # Refactor ffs
 # Add logging
-# black format linebreak at 79
