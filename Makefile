@@ -33,7 +33,7 @@ test: ## Run flake8 syntax and codestyle check, then run tests with pytest
 	make clean
 
 format: ## Run flake8 syntax and codestyle check, then run tests with pytest
-	black --line-length 90 src tests
+	black --line-length=90 src tests
 	flake8 --max-line-length 90 src tests
 
 dockerized-format: ## Format code with black, then run codestyle checks (dockerized)
@@ -42,7 +42,7 @@ dockerized-format: ## Format code with black, then run codestyle checks (dockeri
 		--name project-watertemp-test \
 		project-watertemp-dev \
 		/bin/bash -c \
-			"black --line-length 90 src tests; \
+			"black --line-length=90 src tests; \
 			flake8 --max-line-length 90 src tests"
 
 clean: ## Delete /.pytest_cache and tests/__pycache__
