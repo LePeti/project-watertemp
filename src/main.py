@@ -15,18 +15,21 @@ soup = BeautifulSoup(page.content, "html.parser")
 date_published_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()[8:]
 date_pubished = dateparser.parse(date_published_hun).strftime("%Y-%m-%d")
 
-tables = soup.find_all("table", {"class": "sportho"})
-dfs = pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
-df_names_html = soup.find_all("strong", {"class": "orszagnev"})
-df_names = map(lambda x: BeautifulSoup.get_text(x).capitalize(), df_names_html)
-for df_, water_name in zip(dfs, df_names):
+water_temp_data_tables = pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
+
+names_of_waters_html = soup.find_all("strong", {"class": "orszagnev"})
+names_of_waters = map(
+    lambda x: BeautifulSoup.get_text(x).capitalize(), names_of_waters_html
+)
+for df_, water_name in zip(water_temp_data_tables, names_of_waters):
     df_["name_of_water"] = water_name
 
-df_concat = pd.concat(dfs)
-df_concat["time_of_scraping_cet"] = time_of_scraping
-df_concat["date_published"] = date_pubished
+water_temp_data = pd.concat(water_temp_data_tables)
 
-df_concat.rename(
+water_temp_data["time_of_scraping_cet"] = time_of_scraping
+water_temp_data["date_published"] = date_pubished
+
+water_temp_data.rename(
     columns={
         "cm": "water_depth_cm",
         "víz °C": "water_temp_celsius",
@@ -35,7 +38,7 @@ df_concat.rename(
     inplace=True,
 )
 
-df_concat.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
+water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
 # Assertions
 # Testing
