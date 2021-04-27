@@ -26,7 +26,7 @@ for df_, water_name in zip(dfs, df_names):
     df_["name_of_water"] = water_name
 
 df_concat = pd.concat(dfs)
-df_concat["time_of_scraping_utc"] = time_of_scraping
+df_concat["time_of_scraping_cet"] = time_of_scraping
 df_concat["date_published"] = date_pubished
 
 # black format linebreak at 79
