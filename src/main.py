@@ -1,11 +1,11 @@
-import requests
-import pandas as pd
-from bs4 import BeautifulSoup
-from datetime import datetime
-from pytz import timezone
-import dateparser
 import re
+from datetime import datetime
 
+import dateparser
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+from pytz import timezone
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 page = requests.get(URL)
@@ -40,8 +40,9 @@ water_temp_data.rename(
 
 water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
+water_temp_data.head()
+
 # Assertions
 # Testing
 # Refactor ffs
 # Add logging
-# add isort
