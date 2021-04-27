@@ -9,15 +9,12 @@ import re
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 page = requests.get(URL)
-
 time_of_scraping = datetime.now(timezone("CET")).strftime("%Y-%m-%d %H:%M:%S")
-
 soup = BeautifulSoup(page.content, "html.parser")
-date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
-date_published_hun = re.search(
-    "\\d{1,4}\\. .+ \\d{1,2}\\.", date_published_text_hun
-).group()
+
+date_published_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()[8:]
 date_pubished = dateparser.parse(date_published_hun).strftime("%Y-%m-%d")
+
 tables = soup.find_all("table", {"class": "sportho"})
 dfs = pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
 df_names_html = soup.find_all("strong", {"class": "orszagnev"})
