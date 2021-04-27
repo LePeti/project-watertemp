@@ -19,6 +19,7 @@
         "editor.rulers": [
             90
         ],
+        "python.sortImports.path": "/usr/local/bin/isort"
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
     "workspaceFolder": "/app",
