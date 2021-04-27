@@ -37,7 +37,11 @@ df_concat.rename(
     },
     inplace=True,
 )
+
+df_concat.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
+
 # Assertions
 # Testing
 # Refactor ffs
 # Add logging
+# add isort
