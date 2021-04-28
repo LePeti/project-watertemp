@@ -9,9 +9,9 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 
 logging.basicConfig(level=logging.INFO)
+time_of_scraping = datetime.now(timezone("CET"))
 logging.info(
-    f"Started scraping at "
-    f"{datetime.now(timezone('CET')).strftime('%Y-%m-%d %H:%M:%S %Z')}."
+    f"Started scraping at " f"{time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
 )
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
@@ -23,7 +23,6 @@ else:
         f"Requesting '{page.url}' returned status code {page.status_code}. "
         f"Reason: {page.reason}."
     )
-time_of_scraping = datetime.now(timezone("CET")).strftime("%Y-%m-%d %H:%M:%S")
 soup = BeautifulSoup(page.content, "html.parser")
 
 date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
@@ -64,7 +63,7 @@ for df_, water_name in zip(water_temp_data_tables, names_of_waters):
 
 water_temp_data = pd.concat(water_temp_data_tables)
 
-water_temp_data["time_of_scraping_cet"] = time_of_scraping
+water_temp_data["time_of_scraping_cet"] = time_of_scraping.strftime("%Y-%m-%d %H:%M:%S")
 water_temp_data["date_published"] = date_published
 
 if (num_cols := len(water_temp_data.columns)) != 6:
