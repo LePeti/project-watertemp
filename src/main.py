@@ -12,6 +12,13 @@ logging.basicConfig(level=logging.INFO)
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 page = requests.get(URL)
+if page.status_code == 200:
+    logging.info(f"Requesting '{page.url}' returned status code {page.status_code}.")
+else:
+    logging.error(
+        f"Requesting '{page.url}' returned status code {page.status_code}. "
+        f"Reason: {page.reason}."
+    )
 time_of_scraping = datetime.now(timezone("CET")).strftime("%Y-%m-%d %H:%M:%S")
 soup = BeautifulSoup(page.content, "html.parser")
 
