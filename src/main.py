@@ -67,6 +67,9 @@ water_temp_data = pd.concat(water_temp_data_tables)
 water_temp_data["time_of_scraping_cet"] = time_of_scraping
 water_temp_data["date_published"] = date_published
 
+if (num_cols := len(water_temp_data.columns)) != 6:
+    logging.error(f"Expected 6 columns of data but found {num_cols}.")
+
 water_temp_data.rename(
     columns={
         "cm": "water_depth_cm",
