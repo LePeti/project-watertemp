@@ -9,6 +9,10 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 
 logging.basicConfig(level=logging.INFO)
+logging.info(
+    f"Started scraping at "
+    f"{datetime.now(timezone('CET')).strftime('%Y-%m-%d %H:%M:%S %Z')}."
+)
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 page = requests.get(URL)
