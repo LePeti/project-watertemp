@@ -81,13 +81,3 @@ water_temp_data.rename(
 water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
 print(water_temp_data.head())
-
-# Assertions:
-#    realized I don't need this for now. You need it when you want your program
-#    to stop before actually running into something unexpected. If my
-#    date_published is not in the expected format, then I don't want it to stop
-#    b/c it can still collect valuable information. What I want instead is to
-#    log it and warn me.
-# Testing
-# Refactor ffs
-# Add logging
