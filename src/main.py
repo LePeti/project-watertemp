@@ -22,23 +22,23 @@ else:
 time_of_scraping = datetime.now(timezone("CET")).strftime("%Y-%m-%d %H:%M:%S")
 soup = BeautifulSoup(page.content, "html.parser")
 
-publish_date_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
-publish_date_hun = publish_date_text_hun[8:]
-date_published = dateparser.parse(publish_date_hun).strftime("%Y-%m-%d")
-expected_publish_date_format = "20\\d\\d\\. [A-zÀ-ÿ]+ \\d{1,2}\\."
-publish_date_matches_expectation = bool(
-    re.match(expected_publish_date_format, publish_date_hun)
+date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
+date_published_hun = date_published_text_hun[8:]
+date_published = dateparser.parse(date_published_hun).strftime("%Y-%m-%d")
+expected_date_published_format = "20\\d\\d\\. [A-zÀ-ÿ]+ \\d{1,2}\\."
+date_published_matches_expectation = bool(
+    re.match(expected_date_published_format, date_published_hun)
 )
-if not publish_date_matches_expectation:
+if not date_published_matches_expectation:
     logging.warning(
-        f"Publish date format is not as expected. Value was {publish_date_hun} "
+        f"Publish date format is not as expected. Value was {date_published_hun} "
         f"Expectation is for example '2021. Április 22.' "
-        f"Expectation regex pattern is '{expected_publish_date_format}'"
+        f"Expectation regex pattern is '{expected_date_published_format}'"
     )
 else:
     logging.info(
         f"Publish date on website at the time of scraping is "
-        f"{date_published} [{publish_date_hun}]"
+        f"{date_published} [{date_published_hun}]"
     )
 
 water_temp_data_tables = pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
@@ -71,7 +71,7 @@ print(water_temp_data.head())
 # Assertions:
 #    realized I don't need this for now. You need it when you want your program
 #    to stop before actually running into something unexpected. If my
-#    publish_date is not in the expected format, then I don't want it to stop
+#    date_published is not in the expected format, then I don't want it to stop
 #    b/c it can still collect valuable information. What I want instead is to
 #    log it and warn me.
 # Testing
