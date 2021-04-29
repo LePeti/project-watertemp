@@ -53,3 +53,16 @@ clean: ## Delete /.pytest_cache and tests/__pycache__
 init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks folder into .git/hooks (this way we can share git-hooks on github)
 	find .git/hooks -type l -exec rm {} \;
 	find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
+
+start-db: ## Run postgres:latest detached (data persisted under data/pgdata)
+	docker run -d --rm --name pg-db \
+		-e "PGDATA=/data/pgdata" \
+		-e "POSTGRES_HOST_AUTH_METHOD=trust" \
+		-e PG_DB_NAME=postgres \
+		-e PG_HOST_NAME=db \
+		-e PG_PORT=5432 \
+		-e PG_USER_NAME=postgres \
+		-e PG_PASSWORD=NULL \
+		-v `pwd`/data:/data \
+		-p 5432:5432 \
+		postgres:latest
