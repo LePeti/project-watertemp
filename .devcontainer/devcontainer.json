@@ -1,7 +1,8 @@
 {
     "name": "project-watertemp-dev",
     // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-    "image": "project-watertemp-dev",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "vscode-dev",
     // Set *default* container specific settings.json values on container create.
     "settings": {
         "terminal.integrated.shell.linux": "/usr/bin/zsh",
@@ -21,7 +22,7 @@
         ],
         "python.sortImports.path": "/usr/local/bin/isort"
     },
-    "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
+    // "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
     "workspaceFolder": "/app",
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
@@ -32,12 +33,13 @@
         "vtrois.gitmoji-vscode",
         "ms-toolsai.jupyter",
         "ms-python.python",
-        "njpwerner.autodocstring"
+        "njpwerner.autodocstring",
+        "ms-azuretools.vscode-docker"
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [
-        5432
-    ],
+    // "forwardPorts": [
+    //     5432
+    // ],
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "uname -a",
     // Uncomment to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.

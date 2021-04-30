@@ -3,7 +3,7 @@
 .DEFAULT: help
 
 help: ## Print this help
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 build: ## Build based on Docker/Dockerfile and name it 'project-watertemp'
 	docker build -t project-watertemp -f Docker/Dockerfile .
@@ -11,12 +11,15 @@ build: ## Build based on Docker/Dockerfile and name it 'project-watertemp'
 build-dev: ## Build based on Docker/Dockerfile-dev and name it 'project-watertemp-dev'
 	docker build -t project-watertemp-dev -f Docker/Dockerfile-dev .
 
-shell: ## Start a development shell in docker with source code and tests mounted
-	docker run --rm -it\
-		-v `pwd`/:/app:rw \
-		--name project-watertemp-shell \
-		project-watertemp-dev \
-		/usr/bin/zsh
+up: ## docker-compose up -d
+	docker-compose up -d
+
+down: ## docker-compose down
+	docker-compose down
+
+shell:
+	docker-compose up -d
+	docker exec -ti project-watertemp-vsc-dev /usr/bin/zsh
 
 dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest (dockerized)
 	docker run --rm \
@@ -53,16 +56,3 @@ clean: ## Delete /.pytest_cache and tests/__pycache__
 init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks folder into .git/hooks (this way we can share git-hooks on github)
 	find .git/hooks -type l -exec rm {} \;
 	find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
-
-start-db: ## Run postgres:latest detached (data persisted under data/pgdata)
-	docker run -d --rm --name pg-db \
-		-e "PGDATA=/data/pgdata" \
-		-e "POSTGRES_HOST_AUTH_METHOD=trust" \
-		-e PG_DB_NAME=postgres \
-		-e PG_HOST_NAME=db \
-		-e PG_PORT=5432 \
-		-e PG_USER_NAME=postgres \
-		-e PG_PASSWORD=NULL \
-		-v `pwd`/data:/data \
-		-p 5432:5432 \
-		postgres:latest
