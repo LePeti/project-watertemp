@@ -62,12 +62,14 @@ for df_, water_name in zip(water_temp_data_tables, names_of_waters):
     df_["name_of_water"] = water_name
 
 water_temp_data = pd.concat(water_temp_data_tables)
+water_temp_data.reset_index(inplace=True)
+water_temp_data.rename(columns={"index": "location"}, inplace=True)
 
 water_temp_data["time_of_scraping_cet"] = time_of_scraping.strftime("%Y-%m-%d %H:%M:%S")
 water_temp_data["date_published"] = date_published
 
-if (num_cols := len(water_temp_data.columns)) != 6:
-    logging.error(f"Expected 6 columns of data but found {num_cols}.")
+if (num_cols := len(water_temp_data.columns)) != 7:
+    logging.error(f"Expected 7 columns of data but found {num_cols}.")
 
 water_temp_data.rename(
     columns={
