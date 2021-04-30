@@ -95,7 +95,7 @@ db = create_engine(db_string)
 
 dbConnection = db.connect()
 
-water_temp_data.to_sql("water_temp_raw", dbConnection, index=False, if_exists="replace")
+water_temp_data.to_sql("water_temp_raw", dbConnection, index=False, if_exists="append")
 
 print(pd.read_sql("SELECT * FROM water_temp_raw LIMIT 5", dbConnection))
 
