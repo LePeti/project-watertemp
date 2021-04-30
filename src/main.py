@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 from datetime import datetime
 
@@ -7,6 +8,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from pytz import timezone
+from sqlalchemy import create_engine
 
 logging.basicConfig(level=logging.INFO)
 time_of_scraping = datetime.now(timezone("CET"))
@@ -82,4 +84,19 @@ water_temp_data.rename(
 
 water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
-print(water_temp_data.head())
+db_string = (
+    f"postgresql://"
+    f"{os.getenv('PG_DB_NAME')}:{os.getenv('PG_PASSWORD')}@"
+    f"{os.getenv('PG_HOST_NAME')}:{os.getenv('PG_PORT')}/"
+    f"{os.getenv('PG_USER_NAME')}"
+)
+
+db = create_engine(db_string)
+
+dbConnection = db.connect()
+
+water_temp_data.to_sql("water_temp_raw", dbConnection, index=False, if_exists="replace")
+
+print(pd.read_sql("SELECT * FROM water_temp_raw LIMIT 5", dbConnection))
+
+dbConnection.close()
