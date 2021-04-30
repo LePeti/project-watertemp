@@ -92,11 +92,26 @@ db_string = (
 )
 
 db = create_engine(db_string)
-
-dbConnection = db.connect()
-
-water_temp_data.to_sql("water_temp_raw", dbConnection, index=False, if_exists="append")
-
-print(pd.read_sql("SELECT * FROM water_temp_raw LIMIT 5", dbConnection))
-
-dbConnection.close()
+try:
+    dbConnection = db.connect()
+    logging.info("Successfully connected to database.")
+    num_rows_before = pd.read_sql(
+        "SELECT COUNT(*) FROM water_temp_raw LIMIT 5", dbConnection
+    ).values[0][0]
+    logging.info(
+        f"Table 'water_temp_raw' contains {num_rows_before} before appending new data."
+    )
+    logging.info(f"Appending {water_temp_data.shape[0]} new rows.")
+    water_temp_data.to_sql(
+        "water_temp_raw", dbConnection, index=False, if_exists="append"
+    )
+    num_rows_after = pd.read_sql(
+        "SELECT COUNT(*) FROM water_temp_raw LIMIT 5", dbConnection
+    ).values[0][0]
+    logging.info(
+        f"Table 'water_temp_raw' contains {num_rows_after} after appending new data."
+    )
+    dbConnection.close()
+except Exception as err:
+    logging.error("Couldn't establish connection with the db.")
+    logging.error(err)
