@@ -53,12 +53,8 @@ names_of_waters = map(
     lambda x: BeautifulSoup.get_text(x).capitalize(), names_of_waters_html
 )
 if len(water_temp_data_tables) != 11 or len(names_of_waters_html) != 11:
-    logging.error(
-        f"11 tables were expected but found only {len(water_temp_data_tables)}."
-    )
-    logging.error(
-        f"11 tables names were expected but found only {len(names_of_waters_html)}."
-    )
+    logging.error(f"11 tables were expected but found {len(water_temp_data_tables)}.")
+    logging.error(f"11 tables names were expected but found {len(names_of_waters_html)}.")
 
 for df_, water_name in zip(water_temp_data_tables, names_of_waters):
     df_["name_of_water"] = water_name
