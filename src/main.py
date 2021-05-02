@@ -10,9 +10,10 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 from sqlalchemy import create_engine
 
+URL = "https://www.eumet.hu/vizhomerseklet/"
+
 
 def get_watertemp_page():
-    URL = "https://www.eumet.hu/vizhomerseklet/"
     page = requests.get(URL)
     if page.status_code == 200:
         logging.info(f"Requesting '{page.url}' returned status code {page.status_code}.")
@@ -22,6 +23,10 @@ def get_watertemp_page():
             f"Reason: {page.reason}."
         )
     return page
+
+
+def scrape_watertemp_tables():
+    return pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
 
 
 if __name__ == "__main__":
@@ -54,8 +59,7 @@ if __name__ == "__main__":
             f"{date_published} [{date_published_hun}]"
         )
 
-    URL = "https://www.eumet.hu/vizhomerseklet/"
-    water_temp_data_tables = pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
+    water_temp_data_tables = scrape_watertemp_tables()
 
     names_of_waters_html = soup.find_all("strong", {"class": "orszagnev"})
     names_of_waters = map(
