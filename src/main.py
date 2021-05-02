@@ -10,14 +10,8 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 from sqlalchemy import create_engine
 
-if __name__ == "__main__":
 
-    logging.basicConfig(level=logging.INFO)
-    time_of_scraping = datetime.now(timezone("CET"))
-    logging.info(
-        f"Started scraping at " f"{time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
-    )
-
+def get_watertemp_page():
     URL = "https://www.eumet.hu/vizhomerseklet/"
     page = requests.get(URL)
     if page.status_code == 200:
@@ -27,6 +21,18 @@ if __name__ == "__main__":
             f"Requesting '{page.url}' returned status code {page.status_code}. "
             f"Reason: {page.reason}."
         )
+    return page
+
+
+if __name__ == "__main__":
+
+    logging.basicConfig(level=logging.INFO)
+    time_of_scraping = datetime.now(timezone("CET"))
+    logging.info(
+        f"Started scraping at " f"{time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
+    )
+
+    page = get_watertemp_page()
     soup = BeautifulSoup(page.content, "html.parser")
 
     date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
@@ -48,6 +54,7 @@ if __name__ == "__main__":
             f"{date_published} [{date_published_hun}]"
         )
 
+    URL = "https://www.eumet.hu/vizhomerseklet/"
     water_temp_data_tables = pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
 
     names_of_waters_html = soup.find_all("strong", {"class": "orszagnev"})
