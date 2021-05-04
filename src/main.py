@@ -26,7 +26,9 @@ def get_watertemp_page():
 
 
 def scrape_watertemp_tables():
-    return pd.read_html(URL, flavor="bs4", header=0, index_col=0)[:11]
+    return pd.read_html(
+        "https://www.eumet.hu/vizhomerseklet/", flavor="bs4", header=0, index_col=0
+    )[:11]
 
 
 if __name__ == "__main__":
