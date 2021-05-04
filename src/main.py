@@ -31,17 +31,7 @@ def scrape_watertemp_tables():
     )[:11]
 
 
-if __name__ == "__main__":
-
-    logging.basicConfig(level=logging.INFO)
-    time_of_scraping = datetime.now(timezone("CET"))
-    logging.info(
-        f"Started scraping at " f"{time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
-    )
-
-    page = get_watertemp_page()
-    soup = BeautifulSoup(page.content, "html.parser")
-
+def extract_publish_date(soup):
     date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
     date_published_hun = date_published_text_hun[8:]
     date_published = dateparser.parse(date_published_hun).strftime("%Y-%m-%d")
@@ -60,6 +50,20 @@ if __name__ == "__main__":
             f"Publish date on website at the time of scraping is "
             f"{date_published} [{date_published_hun}]"
         )
+    return date_published
+
+
+if __name__ == "__main__":
+
+    logging.basicConfig(level=logging.INFO)
+    time_of_scraping = datetime.now(timezone("CET"))
+    logging.info(
+        f"Started scraping at " f"{time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
+    )
+
+    page = get_watertemp_page()
+    soup = BeautifulSoup(page.content, "html.parser")
+    date_published = extract_publish_date(soup)
 
     water_temp_data_tables = scrape_watertemp_tables()
 
