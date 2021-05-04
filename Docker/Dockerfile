@@ -4,10 +4,11 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y \
-        libpq-dev \
-        gcc
+    libpq-dev \
+    gcc
 
 COPY requirements.txt requirements.txt
+RUN /bin/bash -c "ls -la"
 RUN pip3 install -r requirements.txt
 RUN rm -rf requirements.txt
 
