@@ -105,9 +105,9 @@ if __name__ == "__main__":
 
     db_string = (
         f"postgresql+psycopg2://"
-        f"{os.getenv('PG_DB_NAME')}:{os.getenv('PG_PASSWORD')}@"
+        f"{os.getenv('PG_USER_NAME')}:{os.getenv('PG_PASSWORD')}@"
         f"{os.getenv('PG_HOST_NAME')}:{os.getenv('PG_PORT')}/"
-        f"{os.getenv('PG_USER_NAME')}"
+        f"{os.getenv('PG_DB_NAME')}"
     )
 
     db = create_engine(db_string)
