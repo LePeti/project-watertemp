@@ -6,4 +6,4 @@ build:
   docker:
     watertemp-scraper: Dockerfile
 run:
-  watertemp-scraper: echo 'hello world'
+  watertemp-scraper: python src/main.py
