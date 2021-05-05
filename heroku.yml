@@ -4,6 +4,6 @@ setup:
     as: DATABASE
 build:
   docker:
-    watertemp-scraper: Docker/Dockerfile
+    watertemp-scraper: Dockerfile
 run:
   watertemp-scraper: echo 'hello world'

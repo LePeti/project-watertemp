@@ -5,11 +5,11 @@
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-build: ## Build based on Docker/Dockerfile and name it 'project-watertemp'
-	docker build -t project-watertemp -f Docker/Dockerfile .
+build: ## Build based on Dockerfile and name it 'project-watertemp'
+	docker build -t project-watertemp -f Dockerfile .
 
-build-dev: ## Build based on Docker/Dockerfile-dev and name it 'project-watertemp-dev'
-	docker build -t project-watertemp-dev -f Docker/Dockerfile-dev .
+build-dev: ## Build based on Dockerfile-dev and name it 'project-watertemp-dev'
+	docker build -t project-watertemp-dev -f Dockerfile-dev .
 
 up: ## docker-compose up -d
 	docker-compose up -d
