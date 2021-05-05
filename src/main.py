@@ -104,7 +104,7 @@ if __name__ == "__main__":
     water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
     db_string = (
-        f"postgresql://"
+        f"postgresql+psycopg2://"
         f"{os.getenv('PG_DB_NAME')}:{os.getenv('PG_PASSWORD')}@"
         f"{os.getenv('PG_HOST_NAME')}:{os.getenv('PG_PORT')}/"
         f"{os.getenv('PG_USER_NAME')}"
