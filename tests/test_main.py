@@ -1,7 +1,6 @@
 from mock import patch
 
-from src.main import get_watertemp_page
-from src.main import scrape_watertemp_tables
+from src.main import get_watertemp_page, scrape_watertemp_tables
 
 
 class TestScraping:
