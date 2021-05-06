@@ -4,6 +4,6 @@ setup:
     as: DATABASE
 build:
   docker:
-    watertemp-scraper: Dockerfile
+    web: Dockerfile
 run:
-  watertemp-scraper: sleep 300
+  web: sleep 300
