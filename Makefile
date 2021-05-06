@@ -56,3 +56,6 @@ clean: ## Delete /.pytest_cache and tests/__pycache__
 init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks folder into .git/hooks (this way we can share git-hooks on github)
 	find .git/hooks -type l -exec rm {} \;
 	find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
+
+scrape-on-heroku:  ## Run scarping once on Heroku using a one-off dyno
+	heroku run -a water-temp python src/main.py
