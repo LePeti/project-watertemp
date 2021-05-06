@@ -6,4 +6,4 @@ build:
   docker:
     watertemp-scraper: Dockerfile
 run:
-  watertemp-scraper: python src/main.py
+  watertemp-scraper: sleep 300
