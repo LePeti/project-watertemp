@@ -15,18 +15,24 @@ on:
 jobs:
 # TODO: implement this in the future: check which files have changed in the last push
   # run build, but only if requirements.txt has changed
-  test:
+  test-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Login to Heroku Container registry
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
       - name: Build base image
         run: make build
       - name: Build dev image
         run: make build-dev
       - name: Test app
         run: make dockerized-test
+      - name: Login to Heroku Container registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Push to Heroku container registry
+        run: |
+          docker tag project-watertemp registry.heroku.com/water-temp/web
+          docker push registry.heroku.com/water-temp/web
+      - name: Release
+        run: heroku container:release -a water-temp web
