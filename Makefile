@@ -57,5 +57,14 @@ init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks
 	find .git/hooks -type l -exec rm {} \;
 	find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
 
-scrape-on-heroku:  ## Run scarping once on Heroku using a one-off dyno
+scrape-on-heroku: ## Run scarping once on Heroku using a one-off dyno
 	heroku run -a water-temp python src/main.py
+
+scrape-locally: ## Run scarping once locally
+	python src/main.py
+
+truncate-raw-on-heroku: ## Delete all raws (truncate) from table 'water-temp-raw' in the Heroku hosted db
+	heroku run -a water-temp python src/dev/truncate_db.py
+
+truncate-raw-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
+	python src/dev/truncate_db.py
