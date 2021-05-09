@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: public
+    description: tbd
+    tables:
+      - name: water_temp_raw
+        tests:
+          - unique:
+              column_name: "location || '-' || name_of_water || '-' || time_of_scraping_cet"
+        columns:
+          - name: location
+            description: Location where the temperature measurement was undertaken
+            tests:
+              - not_null
+          - name: water_depth_cm
+            description: Depth of the natural water in cm where the temperature measurement was undertaken
+          - name: water_temp_celsius
+            description: Temperature of the natural water in celsius on the date_published date
+          - name: air_temp_celsius
+            description: Temperature of the air in celsius on the date_published date
+          - name: name_of_water
+            description: Name of the natural water where the measurement was undertaken
+            tests:
+              - not_null
+          - name: time_of_scraping_cet
+            description: Datetime of when the scraping was run
+            tests:
+              - not_null
+          - name: date_published
+            description: Date when the data was published on the website
+            tests:
+              - not_null
