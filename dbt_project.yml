@@ -19,10 +19,12 @@ data-paths: ["dbt/data"]
 macro-paths: ["dbt/macros"]
 snapshot-paths: ["dbt/snapshots"]
 
-target-path: "target"  # directory which will store compiled SQL files
+target-path: "dbt/target"  # directory which will store compiled SQL files
+log-path: "dbt/logs"
+modules-path: "dbt/modules"
 clean-targets:         # directories to be removed by `dbt clean`
-    - "target"
-    - "dbt_modules"
+    - "dbt/target"
+    - "dbt/dbt_modules"
 
 
 # Configuring models
