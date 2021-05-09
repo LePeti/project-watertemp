@@ -1,0 +1,12 @@
+water-temp:
+  target: prod
+  outputs:
+    prod:
+      type: postgres
+      host: "{{ env_var('PG_HOST_NAME') }}"
+      user: "{{ env_var('PG_USER_NAME') }}"
+      password: "{{ env_var('PG_PASSWORD') }}"
+      port: "{{ env_var('PG_PORT') | as_number }}"
+      dbname: "{{ env_var('PG_DB_NAME') }}"
+      schema: dbt_alice
+      threads: 4

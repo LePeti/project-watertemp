@@ -3,3 +3,7 @@ tests/__pycache__/*
 .vscode/.ropeproject/objectdb
 data/
 .env
+dbt/target/
+dbt/dbt_modules/
+dbt/logs/
+dbt/.user.yml
