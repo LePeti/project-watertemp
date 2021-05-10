@@ -26,16 +26,19 @@
     "workspaceFolder": "/app",
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
-        "ms-vscode.sublime-keybindings",
-        "vscode-icons-team.vscode-icons",
-        "sleistner.vscode-fileutils",
-        "eamodio.gitlens",
-        "vtrois.gitmoji-vscode",
-        "ms-toolsai.jupyter",
-        "ms-python.python",
-        "njpwerner.autodocstring",
-        "ms-azuretools.vscode-docker"
-    ],
+		"ms-vscode.sublime-keybindings",
+		"vscode-icons-team.vscode-icons",
+		"sleistner.vscode-fileutils",
+		"eamodio.gitlens",
+		"vtrois.gitmoji-vscode",
+		"ms-toolsai.jupyter",
+		"ms-python.python",
+		"njpwerner.autodocstring",
+		"ms-azuretools.vscode-docker",
+		"bastienboutonnet.vscode-dbt",
+		"innoverio.vscode-dbt-power-user",
+		"samuelcolvin.jinjahtml"
+	],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [
     //     5432
