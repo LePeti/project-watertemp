@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: water_temp_unique
+    tests:
+      - unique:
+          column_name: "location || '-' || name_of_water || '-' || date_published"
