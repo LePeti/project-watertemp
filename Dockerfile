@@ -15,4 +15,5 @@ COPY src src
 
 ENV DBT_PROFILES_DIR /app/dbt
 
-CMD python src/main.py
+CMD python src/main.py && \
+    dbt run
