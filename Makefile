@@ -1,4 +1,4 @@
-.PHONY: help build shell test format clean
+.PHONY: help build shell test format clean up down
 
 .DEFAULT: help
 
@@ -28,11 +28,13 @@ dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with p
 		project-watertemp-dev \
 		/bin/bash -c \
 			"flake8 --max-line-length 90 src tests; \
-			pytest tests"
+			pytest tests; \
+			dbt test"
 
 test: ## Run flake8 syntax and codestyle check, then run tests with pytest
 	flake8 --max-line-length 90 src tests
 	pytest tests
+	dbt test
 	make clean
 
 format: ## Run flake8 syntax and codestyle check, then run tests with pytest
@@ -52,6 +54,7 @@ dockerized-format: ## Format code with black, then run codestyle checks (dockeri
 
 clean: ## Delete /.pytest_cache and tests/__pycache__
 	rm -rf .pytest_cache **/__pycache__
+	dbt clean
 
 init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks folder into .git/hooks (this way we can share git-hooks on github)
 	find .git/hooks -type l -exec rm {} \;
@@ -63,8 +66,9 @@ scrape-on-heroku: ## Run scarping once on Heroku using a one-off dyno
 scrape-locally: ## Run scarping once locally
 	python src/main.py
 
-truncate-raw-on-heroku: ## Delete all raws (truncate) from table 'water-temp-raw' in the Heroku hosted db
-	heroku run -a water-temp python src/dev/truncate_db.py
+# The below is commented out so that no accidental deletion happens
+# truncate-raw-on-heroku: ## Delete all raws (truncate) from table 'water-temp-raw' in the Heroku hosted db
+# 	heroku run -a water-temp python src/dev/truncate_db.py
 
 truncate-raw-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
 	python src/dev/truncate_db.py
