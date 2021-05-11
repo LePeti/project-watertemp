@@ -8,8 +8,8 @@ help: ## Print this help
 build: ## Build based on Dockerfile and name it 'project-watertemp'
 	docker build -t project-watertemp -f Dockerfile .
 
-build-dev: ## Build based on Dockerfile-dev and name it 'project-watertemp-dev'
-	docker build -t project-watertemp-dev -f Dockerfile-dev .
+build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
+	docker build -t project-watertemp-dev -f dev.Dockerfile .
 
 up: ## docker-compose up -d
 	docker-compose up -d
