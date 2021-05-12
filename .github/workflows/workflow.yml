@@ -26,11 +26,11 @@ jobs:
         run: make build-dev
       - name: Test app
         env:
-          PG_DB_NAME: ${{ secrets.PG_DB_NAME }}
-          PG_HOST_NAME: ${{ secrets.PG_HOST_NAME }}
-          PG_PORT: ${{ secrets.PG_PORT }}
-          PG_USER_NAME: ${{ secrets.PG_USER_NAME }}
-          PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          PG_DB_NAME: ${{ env.PG_DB_NAME }}
+          PG_HOST_NAME: ${{ env.PG_HOST_NAME }}
+          PG_PORT: ${{ env.PG_PORT }}
+          PG_USER_NAME: ${{ env.PG_USER_NAME }}
+          PG_PASSWORD: ${{ env.PG_PASSWORD }}
         run: make dockerized-test
       - name: Login to Heroku Container registry
         env:
