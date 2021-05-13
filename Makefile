@@ -17,7 +17,7 @@ up: ## docker-compose up -d
 down: ## docker-compose down
 	docker-compose down
 
-shell:
+shell: ## Start a shell session in docker
 	docker-compose up -d
 	docker exec -ti project-watertemp-vsc-dev /usr/bin/zsh
 
@@ -31,7 +31,7 @@ dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with p
 			pytest tests; \
 			dbt test"
 
-test: ## Run flake8 syntax and codestyle check, then run tests with pytest
+test: ## Run flake8 syntax and codestyle check, then run tests with pytest , finally test dbt tables
 	flake8 --max-line-length 90 src tests
 	pytest tests
 	dbt test
