@@ -4,7 +4,6 @@ devcontainer
 .gitignore
 Dockerfile
 README.md
-dbt
 docker-compose.yml
 .env
 .git
@@ -12,6 +11,5 @@ docker-compose.yml
 .vscode
 Makefile
 data
-dbt_project.yml
 heroku.yml
 tests
