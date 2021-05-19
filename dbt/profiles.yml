@@ -8,5 +8,5 @@ water-temp:
       password: "{{ env_var('PG_PASSWORD') }}"
       port: "{{ env_var('PG_PORT') | as_number }}"
       dbname: "{{ env_var('PG_DB_NAME') }}"
-      schema: dbt_alice
+      schema: public
       threads: 4
