@@ -31,9 +31,7 @@ jobs:
           PG_PORT: ${{ secrets.PG_PORT }}
           PG_USER_NAME: ${{ secrets.PG_USER_NAME }}
           PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
-        run: |
-          echo $PG_PORT
-          make dockerized-test
+        run: make dockerized-test
       - name: Login to Heroku Container registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
