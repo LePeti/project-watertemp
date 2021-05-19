@@ -71,4 +71,7 @@ scrape-locally: ## Run scarping once locally
 # 	heroku run -a water-temp python src/dev/truncate_db.py
 
 truncate-raw-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
-	python src/dev/truncate_db.py
+	python src/dev/truncate_db.py water_temp_raw
+
+truncate-unique-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
+	python src/dev/truncate_db.py water_temp_unique

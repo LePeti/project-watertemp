@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -7,6 +8,11 @@ from sqlalchemy import create_engine
 if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
+
+    if sys.argv is None:
+        table_name = "water_temp_raw"
+    else:
+        table_name = sys.argv[1]
 
     db_string = (
         f"postgresql+psycopg2://"
@@ -17,17 +23,15 @@ if __name__ == "__main__":
 
     logging.info(
         f"Started deleting rows from DB '{os.getenv('PG_DB_NAME')}', "
-        f"table 'water_temp_raw'."
+        f"table '{table_name}'."
     )
 
     engine = create_engine(db_string)
     try:
         with engine.connect() as con:
-            num_rows = pd.read_sql("SELECT COUNT(*) FROM water_temp_raw", con).values[0][
-                0
-            ]
-            con.execute("DELETE FROM water_temp_raw")
-        logging.info(f"Deleted all ({num_rows}) rows from table 'water_temp_raw'.")
+            num_rows = pd.read_sql(f"SELECT COUNT(*) FROM {table_name}", con).values[0][0]
+            con.execute(f"DELETE FROM {table_name}")
+        logging.info(f"Deleted all ({num_rows}) rows from table '{table_name}'.")
     except Exception as err:
         logging.error("Couldn't establish connection with the db.")
         logging.error(err)
