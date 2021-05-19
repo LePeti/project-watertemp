@@ -21,7 +21,7 @@ shell: ## Start a shell session in docker
 	docker-compose up -d
 	docker exec -ti project-watertemp-vsc-dev /usr/bin/zsh
 
-dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest (dockerized)
+dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest , finally test dbt tables (dockerized)
 	docker run --rm \
 		-v `pwd`/:/app:rw \
 		--name project-watertemp-test \
