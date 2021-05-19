@@ -10,9 +10,11 @@
         "jupyter.notebookFileRoot": "${workspaceFolder}/src",
         // automatically reload changes made to imported files without having to restart the interactive session.
         "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2",
+        "python.formatting.provider": "black",
         "python.formatting.blackArgs": [
             "--line-length=90"
         ],
+        "python.linting.flake8Enabled": true,
         "python.linting.flake8Args": [
             "--max-line-length 90",
             "--extend-ignore E203,W503" // this makes flake8 compatible w/ black
