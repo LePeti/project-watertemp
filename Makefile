@@ -2,6 +2,10 @@
 
 .DEFAULT: help
 
+ifneq ($(findstring .env,$(wildcard .env)), )
+    include .env
+endif
+
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
@@ -22,9 +26,14 @@ shell: ## Start a shell session in docker
 	docker exec -ti project-watertemp-vsc-dev /usr/bin/zsh
 
 dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest , finally test dbt tables (dockerized)
-	docker run --rm \
+	@docker run --rm \
 		-v `pwd`/:/app:rw \
 		--name project-watertemp-test \
+		-e PG_DB_NAME=$(PG_DB_NAME) \
+		-e PG_HOST_NAME=$(PG_HOST_NAME) \
+		-e PG_PORT=$(PG_PORT) \
+		-e PG_USER_NAME=$(PG_USER_NAME) \
+		-e PG_PASSWORD=$(PG_PASSWORD) \
 		project-watertemp-dev \
 		/bin/bash -c \
 			"flake8 --max-line-length 90 src tests; \
