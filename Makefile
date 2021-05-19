@@ -29,11 +29,6 @@ dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with p
 	@docker run --rm \
 		-v `pwd`/:/app:rw \
 		--name project-watertemp-test \
-		-e PG_DB_NAME=$(PG_DB_NAME) \
-		-e PG_HOST_NAME=$(PG_HOST_NAME) \
-		-e PG_PORT=$(PG_PORT) \
-		-e PG_USER_NAME=$(PG_USER_NAME) \
-		-e PG_PASSWORD=$(PG_PASSWORD) \
 		project-watertemp-dev \
 		/bin/bash -c \
 			"flake8 --max-line-length 90 src tests; \
