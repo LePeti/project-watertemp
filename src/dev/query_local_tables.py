@@ -18,7 +18,6 @@ if __name__ == "__main__":
 
     logging.info(f"Query string: {query_string}")
 
-    # TODO: extract to function
     db_string = concat_conn_string()
 
     engine = create_engine(db_string)

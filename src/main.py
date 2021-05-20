@@ -1,5 +1,4 @@
 import logging
-import os
 import re
 from datetime import datetime
 
@@ -9,6 +8,8 @@ import requests
 from bs4 import BeautifulSoup
 from pytz import timezone
 from sqlalchemy import create_engine
+
+from src.functions.db import concat_conn_string
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 
@@ -103,14 +104,7 @@ if __name__ == "__main__":
 
     water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
-    db_string = (
-        f"postgresql+psycopg2://"
-        f"{os.getenv('PG_USER_NAME')}:{os.getenv('PG_PASSWORD')}@"
-        f"{os.getenv('PG_HOST_NAME')}:{os.getenv('PG_PORT')}/"
-        f"{os.getenv('PG_DB_NAME')}"
-    )
-
-    db = create_engine(db_string)
+    db = create_engine(concat_conn_string())
     try:
         dbConnection = db.connect()
         logging.info("Successfully connected to database.")
