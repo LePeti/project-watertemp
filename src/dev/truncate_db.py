@@ -5,7 +5,7 @@ import sys
 import pandas as pd
 from sqlalchemy import create_engine
 
-from src.functions.db import concat_conn_string
+from src.functions.db import concat_local_conn_string
 
 if __name__ == "__main__":
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
         f"table '{table_name}'."
     )
 
-    engine = create_engine(concat_conn_string())
+    engine = create_engine(concat_local_conn_string())
     try:
         with engine.connect() as con:
             num_rows = pd.read_sql(f"SELECT COUNT(*) FROM {table_name}", con).values[0][0]

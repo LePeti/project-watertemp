@@ -4,7 +4,7 @@ import sys
 import pandas as pd
 from sqlalchemy import create_engine
 
-from src.functions.db import concat_conn_string
+from src.functions.db import concat_local_conn_string
 
 print(sys.path)
 
@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     logging.info(f"Query string: {query_string}")
 
-    db_string = concat_conn_string()
+    db_string = concat_local_conn_string()
 
     engine = create_engine(db_string)
     try:
