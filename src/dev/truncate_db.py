@@ -5,6 +5,8 @@ import sys
 import pandas as pd
 from sqlalchemy import create_engine
 
+from src.functions.db import concat_conn_string
+
 if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
@@ -14,19 +16,12 @@ if __name__ == "__main__":
     else:
         table_name = sys.argv[1]
 
-    db_string = (
-        f"postgresql+psycopg2://"
-        f"{os.getenv('PG_USER_NAME')}:{os.getenv('PG_PASSWORD')}@"
-        f"{os.getenv('PG_HOST_NAME')}:{os.getenv('PG_PORT')}/"
-        f"{os.getenv('PG_DB_NAME')}"
-    )
-
     logging.info(
         f"Started deleting rows from DB '{os.getenv('PG_DB_NAME')}', "
         f"table '{table_name}'."
     )
 
-    engine = create_engine(db_string)
+    engine = create_engine(concat_conn_string())
     try:
         with engine.connect() as con:
             num_rows = pd.read_sql(f"SELECT COUNT(*) FROM {table_name}", con).values[0][0]
