@@ -57,6 +57,7 @@ dockerized-format: ## Format code with black, then run codestyle checks (dockeri
 clean: ## Delete /.pytest_cache and tests/__pycache__
 	rm -rf .pytest_cache **/__pycache__
 	dbt clean
+	# FIX: didn't clean up in functions folder
 
 init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks folder into .git/hooks (this way we can share git-hooks on github)
 	find .git/hooks -type l -exec rm {} \;
@@ -73,7 +74,7 @@ scrape-locally: ## Run scarping once locally
 # 	heroku run -a water-temp python src/dev/truncate_db.py
 
 truncate-raw-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
-	python src/dev/truncate_db.py water_temp_raw
+	python -m src.dev.truncate_db water_temp_raw
 
 truncate-unique-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
-	python src/dev/truncate_db.py water_temp_unique
+	python -m src.dev.truncate_db water_temp_unique
