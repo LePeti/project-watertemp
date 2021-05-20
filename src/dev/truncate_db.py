@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
 
-    if sys.argv is None:
+    if len(sys.argv) == 1:  # No arguments provided (only the path to the script)
         table_name = "water_temp_raw"
     else:
         table_name = sys.argv[1]
