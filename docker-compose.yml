@@ -20,3 +20,12 @@ services:
       - ./data:/data
     ports:
       - 5432:5432
+
+  prod:
+    image: project-watertemp
+    container_name: project-watertemp-prod
+    depends_on:
+      - db
+    env_file: .env
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
