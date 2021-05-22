@@ -2,12 +2,15 @@
 
 .DEFAULT: help
 
-ifneq ($(findstring .env,$(wildcard .env)), )
-    include .env
-endif
-
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+mflist:
+	echo $(MAKEFILE_LIST)
+
+# ifneq ($(findstring .env,$(wildcard .env)), )
+#     include .env
+# endif
 
 build: ## Build based on Dockerfile and name it 'project-watertemp'
 	docker build -t project-watertemp -f Dockerfile .
@@ -27,7 +30,7 @@ shell: ## Start a shell session in docker
 
 dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest , finally test dbt tables (dockerized)
 	@docker run --rm \
-		-v `pwd`/:/app:rw \
+		-v `pwd`/tests:/app/tests:rw \
 		--name project-watertemp-test \
 		project-watertemp-dev \
 		/bin/bash -c \
@@ -46,7 +49,7 @@ format: ## Run flake8 syntax and codestyle check, then run tests with pytest
 
 dockerized-format: ## Format code with black, then run codestyle checks (dockerized)
 	docker run --rm \
-		-v `pwd`/:/app:rw \
+		-v `pwd`/tests:/app/tests:rw \
 		--name project-watertemp-test \
 		project-watertemp-dev \
 		/bin/bash -c \
