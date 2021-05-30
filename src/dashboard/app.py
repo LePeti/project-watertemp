@@ -1,12 +1,14 @@
+import os
+
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 from dotenv import load_dotenv
-
 from src.functions.db import query_water_temps_unique_heroku
 
 load_dotenv()
+port = int(os.environ.get("PORT", 8050))
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
@@ -30,4 +32,4 @@ app.layout = html.Div(
 )
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False, host="0.0.0.0", port=port)
