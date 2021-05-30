@@ -1,4 +1,4 @@
-.PHONY: help build shell test format clean up down
+.PHONY: help build shell test format clean up down app
 
 .DEFAULT: help
 
@@ -64,6 +64,9 @@ scrape-on-heroku: ## Run scarping once on Heroku using a one-off dyno
 
 scrape-locally: ## Run scarping once locally
 	python -m src.main
+
+app: ## Start dash app locally
+	python -m src.dashboard.app
 
 # The below is commented out so that no accidental deletion happens
 # truncate-raw-on-heroku: ## Delete all raws (truncate) from table 'water-temp-raw' in the Heroku hosted db
