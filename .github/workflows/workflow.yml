@@ -9,8 +9,7 @@ on:
       - main
 
 env:
-  global:
-    DOCKER_BUILDKIT: 1
+  DOCKER_BUILDKIT: 1
 
 jobs:
 # TODO: implement this in the future: check which files have changed in the last push
