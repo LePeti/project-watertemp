@@ -23,13 +23,13 @@ jobs:
       - name: Login to Heroku Container registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          run: heroku container:login
       - name: Build base image
         run: make build
       - name: Build dev image
         run: make build-dev
       - name: Test app
         run: make dockerized-test
-        run: heroku container:login
       - name: Push to Heroku container registry
         run: |
           docker tag project-watertemp registry.heroku.com/water-temp/web
