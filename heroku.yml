@@ -6,4 +6,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: python -m src.dashboard.app
+  web: "python -m src.dashboard.app"
