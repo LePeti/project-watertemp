@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 from sqlalchemy import create_engine
 
-from src.functions.db import concat_local_conn_string
+from src.functions.db import concat_conn_string
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
 
-    db = create_engine(concat_local_conn_string())
+    db = create_engine(concat_conn_string())
     try:
         dbConnection = db.connect()
         logging.info("Successfully connected to database.")

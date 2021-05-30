@@ -1,7 +1,7 @@
 import os
 
 
-def concat_local_conn_string():
+def concat_conn_string():
     return (
         f"postgresql+psycopg2://"
         f"{os.getenv('PG_USER_NAME')}:{os.getenv('PG_PASSWORD')}@"
