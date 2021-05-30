@@ -8,9 +8,9 @@ on:
     branches:
       - main
 
-# define env vars
-# env:
-#   APP_NAME: name-of-your-app
+env:
+  global:
+    DOCKER_BUILDKIT: 1
 
 jobs:
 # TODO: implement this in the future: check which files have changed in the last push
@@ -20,20 +20,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Login to Heroku Container registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       - name: Build base image
         run: make build
       - name: Build dev image
         run: make build-dev
       - name: Test app
         run: make dockerized-test
-      - name: Login to Heroku Container registry
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:login
       - name: Push to Heroku container registry
         run: |
           docker tag project-watertemp registry.heroku.com/water-temp/web
           docker push registry.heroku.com/water-temp/web
+          docker tag project-watertemp-dev registry.heroku.com/water-temp/web-dev
+          docker push registry.heroku.com/water-temp/web-dev
       - name: Release
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
