@@ -5,7 +5,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 from dotenv import load_dotenv
-from src.functions.db import query_water_temps_unique_heroku
+from src.functions.db import query_water_temps_unique
 
 load_dotenv()
 port = int(os.environ.get("PORT", 8050))
@@ -16,7 +16,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 colors = {"background": "#111111", "text": "#7FDBFF"}
 
-water_temps = query_water_temps_unique_heroku()
+water_temps = query_water_temps_unique()
 
 hun_waters = water_temps.loc[water_temps["name_of_water"] == "Magyar tavak"][
     ["location", "water_temp_celsius", "date_published"]

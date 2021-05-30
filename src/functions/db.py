@@ -14,6 +14,14 @@ def query_water_temps_unique_heroku():
         return pd.read_sql(query_string, con)
 
 
+def query_water_temps_unique():
+    db_string = concat_conn_string()
+    engine = create_engine(db_string)
+    query_string = f"SELECT * FROM {os.getenv('PG_DB_NAME')}.public.water_temp_unique"
+    with engine.connect() as con:
+        return pd.read_sql(query_string, con)
+
+
 def concat_conn_string():
     return (
         f"postgresql+psycopg2://"
