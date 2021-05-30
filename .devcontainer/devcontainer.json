@@ -7,7 +7,7 @@
     "settings": {
         "terminal.integrated.defaultProfile.linux": "/usr/bin/zsh",
         "python.pythonPath": "/usr/local/bin/python",
-        "jupyter.notebookFileRoot": "${workspaceFolder}/src",
+        "jupyter.notebookFileRoot": "${workspaceFolder}",
         // automatically reload changes made to imported files without having to restart the interactive session.
         "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2",
         "python.formatting.provider": "black",
@@ -28,22 +28,22 @@
     "workspaceFolder": "/app",
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
-		"ms-vscode.sublime-keybindings",
-		"vscode-icons-team.vscode-icons",
-		"sleistner.vscode-fileutils",
-		"eamodio.gitlens",
-		"vtrois.gitmoji-vscode",
-		"ms-python.python",
-		"ms-toolsai.jupyter",
-		"ms-python.vscode-pylance",
-		"njpwerner.autodocstring",
-		"ms-azuretools.vscode-docker",
-		"bastienboutonnet.vscode-dbt",
-		"innoverio.vscode-dbt-power-user",
-		"samuelcolvin.jinjahtml",
-		"gruntfuggly.todo-tree",
-		"lkytal.pomodoro"
-	],
+        "ms-vscode.sublime-keybindings",
+        "vscode-icons-team.vscode-icons",
+        "sleistner.vscode-fileutils",
+        "eamodio.gitlens",
+        "vtrois.gitmoji-vscode",
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "ms-azuretools.vscode-docker",
+        "bastienboutonnet.vscode-dbt",
+        "innoverio.vscode-dbt-power-user",
+        "samuelcolvin.jinjahtml",
+        "gruntfuggly.todo-tree",
+        "lkytal.pomodoro"
+    ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [
     //     5432
