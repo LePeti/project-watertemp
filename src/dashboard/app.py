@@ -43,6 +43,7 @@ app.layout = html.Div(
             ],
         ),
         html.Div("Scraped daily at 10 am UTC."),
+        html.Div("Created by Peter Lukacs. Reach out at lukacs.peter.andras@gmail.com"),
     ]
 )
 
