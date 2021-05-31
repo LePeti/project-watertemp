@@ -21,7 +21,7 @@ def query_water_temps_unique():
     with engine.connect() as con:
         water_temps = pd.read_sql(query_string, con)
     water_temps["water_temp_celsius"] = pd.to_numeric(water_temps["water_temp_celsius"])
-    water_temps["date_published"] = pd.to_datetime(water_temps["date_published"])
+    water_temps["date_published"] = pd.to_datetime(water_temps["date_published"]).dt.date
     return water_temps
 
 
