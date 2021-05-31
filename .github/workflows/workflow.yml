@@ -29,13 +29,15 @@ jobs:
         run: make build-dev
       - name: Test app
         run: make dockerized-test
-      - name: Push to Heroku container registry
+      - name: Push prod image to Heroku container registry
         run: |
           docker tag project-watertemp registry.heroku.com/water-temp/web
           docker push registry.heroku.com/water-temp/web
-          docker tag project-watertemp-dev registry.heroku.com/water-temp/web-dev
-          docker push registry.heroku.com/water-temp/web-dev
-      - name: Release
+      - name: Release to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:release -a water-temp web
+      - name: Push dev image to Heroku container registry
+        run: |
+          docker tag project-watertemp-dev registry.heroku.com/water-temp/web-dev
+          docker push registry.heroku.com/water-temp/web-dev
