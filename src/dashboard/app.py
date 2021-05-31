@@ -22,8 +22,18 @@ app = dash.Dash(
 )
 
 water_temps = query_water_temps_unique().sort_values(
-    ["name_of_water", "date_published", "location"]
+    ["name_of_water", "location", "date_published"]
 )
+
+water_temps_to_show = water_temps[
+    [
+        "date_published",
+        "name_of_water",
+        "location",
+        "water_temp_celsius",
+        "water_depth_cm",
+    ]
+]
 
 app.layout = html.Div(
     [
@@ -44,9 +54,12 @@ app.layout = html.Div(
         dcc.Graph(id="water-temp-time-series-graph"),
         dash_table.DataTable(
             id="table",
-            columns=[{"name": i, "id": i} for i in water_temps.columns],
-            data=water_temps.to_dict("records"),
+            columns=[{"name": i, "id": i} for i in water_temps_to_show.columns],
+            data=water_temps_to_show.to_dict("records"),
             page_size=10,
+            filter_action="native",
+            sort_action="native",
+            sort_mode="multi",
         ),
         html.Hr(),
         html.Div(
