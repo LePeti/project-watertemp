@@ -97,24 +97,17 @@ def filter_fig(name_of_water_filter, locations_filter):
 
 @app.callback(
     Output("location-selector", "options"),
-    Input("name-of-water-selector", "value"),
-)
-def populate_location_dropdown_options(name_of_water):
-    locations = pd.unique(
-        water_temps.loc[water_temps["name_of_water"] == name_of_water]["location"].values
-    )
-    return [{"label": location, "value": location} for location in locations]
-
-
-@app.callback(
     Output("location-selector", "value"),
     Input("name-of-water-selector", "value"),
 )
-def populate_location_dropdown_values(name_of_water):
+def populate_location_dropdown(name_of_water):
     locations = pd.unique(
         water_temps.loc[water_temps["name_of_water"] == name_of_water]["location"].values
     )
-    return [location for location in locations]
+    return (
+        [{"label": location, "value": location} for location in locations],
+        [location for location in locations],
+    )
 
 
 if __name__ == "__main__":
