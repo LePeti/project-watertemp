@@ -26,11 +26,19 @@ hun_waters = water_temps.loc[water_temps["name_of_water"] == "Magyar tavak"][
 hun_waters["water_temp_celsius"] = pd.to_numeric(hun_waters["water_temp_celsius"])
 hun_waters["date_published"] = pd.to_datetime(hun_waters["date_published"])
 
-fig = px.line(hun_waters, x="date_published", y="water_temp_celsius", color="location")
+fig = px.line(
+    hun_waters,
+    x="date_published",
+    y="water_temp_celsius",
+    color="location",
+    labels={"date_published": "", "water_temp_celsius": "water temperature (celsius)"},
+    template="plotly_white",
+)
+fig.update_traces(mode="markers+lines")
 
 app.layout = html.Div(
     children=[
-        html.H1(children="Hungarian water temperatures"),
+        html.H1(children="Hungarian natural water temperatures"),
         dcc.Graph(id="example-graph-2", figure=fig),
     ],
 )
