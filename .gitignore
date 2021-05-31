@@ -1,9 +1,10 @@
 tests/__pycache__/*
 *.pyc
-.vscode/.ropeproject/objectdb
 data/
-.env
+.vscode/.ropeproject/objectdb
 dbt/target/
+.env
 dbt/dbt_modules/
 dbt/logs/
 dbt/.user.yml
+**/.DS_Store

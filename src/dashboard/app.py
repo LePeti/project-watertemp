@@ -15,7 +15,11 @@ port = int(os.environ.get("PORT", 8050))
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(
+    __name__,
+    external_stylesheets=external_stylesheets,
+    title="Water temp",
+)
 
 water_temps = query_water_temps_unique()
 
