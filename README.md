@@ -1,8 +1,9 @@
 # project-watertemp
 
+![](https://github.com/LePeti/project-watertemp/actions/workflows/workflow.yml/badge.svg)
+
 **The goal of this project is to scrape and accumulate data on Hungarian natural water (rivers, lakes) temperatures.**
 
-![CI Build](https://github.com/LePeti/project-watertemp/actions/workflows/workflow.yml/badge.svg)
 ## Setup
 
 + Run `make` in your terminal to see and run most available commands.
