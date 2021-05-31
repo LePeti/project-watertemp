@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
 from dotenv import load_dotenv
+
 from src.functions.db import query_water_temps_unique
 
 load_dotenv()
