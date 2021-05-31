@@ -33,6 +33,16 @@ app.layout = html.Div(
             value="Magyar tavak",
         ),
         dcc.Graph(id="water-temp-time-series"),
+        html.Div(
+            [
+                "Source: ",
+                html.A(
+                    "https://www.eumet.hu/vizhomerseklet/",
+                    href="https://www.eumet.hu/vizhomerseklet/",
+                ),
+            ],
+        ),
+        html.Div("Scraped daily at 10 am UTC."),
     ]
 )
 
@@ -68,4 +78,4 @@ def filter_fig(selected_name_of_water):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=False, host="0.0.0.0", port=port)
+    app.run_server(debug=True, host="0.0.0.0", port=port)
