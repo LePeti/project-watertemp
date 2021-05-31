@@ -41,6 +41,3 @@ def concat_heroku_conn_string():
         f"{os.getenv('HEROKU_PG_HOST_NAME')}:{os.getenv('HEROKU_PG_PORT')}/"
         f"{os.getenv('HEROKU_PG_DB_NAME')}"
     )
-
-
-# %%
