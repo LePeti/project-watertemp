@@ -118,4 +118,4 @@ def populate_location_dropdown_values(name_of_water):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, host="0.0.0.0", port=port)
+    app.run_server(debug=False, host="0.0.0.0", port=port)
