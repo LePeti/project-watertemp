@@ -3,11 +3,11 @@ import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table
 import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
 from dotenv import load_dotenv
-
 from src.functions.db import query_water_temps_unique
 
 load_dotenv()
@@ -21,7 +21,9 @@ app = dash.Dash(
     title="Water temp",
 )
 
-water_temps = query_water_temps_unique()
+water_temps = query_water_temps_unique().sort_values(
+    ["name_of_water", "date_published", "location"]
+)
 
 app.layout = html.Div(
     [
@@ -40,6 +42,12 @@ app.layout = html.Div(
         ),
         html.Br(),
         dcc.Graph(id="water-temp-time-series-graph"),
+        dash_table.DataTable(
+            id="table",
+            columns=[{"name": i, "id": i} for i in water_temps.columns],
+            data=water_temps.to_dict("records"),
+            page_size=10,
+        ),
         html.Hr(),
         html.Div(
             [
