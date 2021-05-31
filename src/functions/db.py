@@ -19,7 +19,10 @@ def query_water_temps_unique():
     engine = create_engine(db_string)
     query_string = f"SELECT * FROM {os.getenv('PG_DB_NAME')}.public.water_temp_unique"
     with engine.connect() as con:
-        return pd.read_sql(query_string, con)
+        water_temps = pd.read_sql(query_string, con)
+    water_temps["water_temp_celsius"] = pd.to_numeric(water_temps["water_temp_celsius"])
+    water_temps["date_published"] = pd.to_datetime(water_temps["date_published"])
+    return water_temps
 
 
 def concat_conn_string():
