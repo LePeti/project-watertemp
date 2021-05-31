@@ -21,7 +21,7 @@ water_temps = query_water_temps_unique()
 
 hun_waters = water_temps.loc[water_temps["name_of_water"] == "Magyar tavak"][
     ["location", "water_temp_celsius", "date_published"]
-]
+].sort_values(by="date_published")
 
 hun_waters["water_temp_celsius"] = pd.to_numeric(hun_waters["water_temp_celsius"])
 hun_waters["date_published"] = pd.to_datetime(hun_waters["date_published"])
