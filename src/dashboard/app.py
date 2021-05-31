@@ -5,7 +5,9 @@ import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
 import plotly.express as px
+from dash.dependencies import Input, Output
 from dotenv import load_dotenv
+
 from src.functions.db import query_water_temps_unique
 
 load_dotenv()
@@ -19,29 +21,51 @@ colors = {"background": "#111111", "text": "#7FDBFF"}
 
 water_temps = query_water_temps_unique()
 
-hun_waters = water_temps.loc[water_temps["name_of_water"] == "Magyar tavak"][
-    ["location", "water_temp_celsius", "date_published"]
-].sort_values(by="date_published")
-
-hun_waters["water_temp_celsius"] = pd.to_numeric(hun_waters["water_temp_celsius"])
-hun_waters["date_published"] = pd.to_datetime(hun_waters["date_published"])
-
-fig = px.line(
-    hun_waters,
-    x="date_published",
-    y="water_temp_celsius",
-    color="location",
-    labels={"date_published": "", "water_temp_celsius": "water temperature (celsius)"},
-    template="plotly_white",
-)
-fig.update_traces(mode="markers+lines")
-
 app.layout = html.Div(
-    children=[
-        html.H1(children="Hungarian natural water temperatures"),
-        dcc.Graph(id="example-graph-2", figure=fig),
-    ],
+    [
+        html.H1(children="Historical natural water temperatures"),
+        dcc.Dropdown(
+            id="name-of-water-selector-dropdown",
+            options=[
+                {"label": water, "value": water}
+                for water in pd.unique(water_temps["name_of_water"].values)
+            ],
+            value="Magyar tavak",
+        ),
+        dcc.Graph(id="water-temp-time-series"),
+    ]
 )
+
+
+@app.callback(
+    Output("water-temp-time-series", "figure"),
+    Input("name-of-water-selector-dropdown", "value"),
+)
+def filter_fig(selected_name_of_water):
+    selected_waters = water_temps.loc[
+        water_temps["name_of_water"] == selected_name_of_water
+    ][["location", "water_temp_celsius", "date_published"]].sort_values(
+        by="date_published"
+    )
+    selected_waters["water_temp_celsius"] = pd.to_numeric(
+        selected_waters["water_temp_celsius"]
+    )
+    selected_waters["date_published"] = pd.to_datetime(selected_waters["date_published"])
+
+    fig = px.line(
+        selected_waters,
+        x="date_published",
+        y="water_temp_celsius",
+        color="location",
+        labels={
+            "date_published": "",
+            "water_temp_celsius": "water temperature (celsius)",
+        },
+        template="plotly_white",
+    )
+    fig.update_traces(mode="markers+lines")
+    return fig
+
 
 if __name__ == "__main__":
     app.run_server(debug=False, host="0.0.0.0", port=port)
