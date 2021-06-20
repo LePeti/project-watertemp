@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta
 
 import dash
+import flask
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
@@ -17,10 +18,9 @@ port = int(os.environ.get("PORT", 8050))
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
+f_app = flask.Flask(__name__)
 app = dash.Dash(
-    __name__,
-    external_stylesheets=external_stylesheets,
-    title="Water temp",
+    __name__, external_stylesheets=external_stylesheets, title="Water temp", server=f_app
 )
 
 water_temps = query_water_temps_unique().sort_values(
