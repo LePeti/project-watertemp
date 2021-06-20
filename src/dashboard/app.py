@@ -156,11 +156,13 @@ def validate_time_range_selector_input(
     time_range_selector, name_of_water_filter, locations_filter
 ):
     min_date_to_show = datetime.now().date() - timedelta(days=eval(time_range_selector))
-    min_date_in_data = water_temps.loc[
+    filtered_dates = water_temps.loc[
         (water_temps["name_of_water"] == name_of_water_filter)
         & (water_temps["location"].isin(locations_filter))
-    ]["date_published"].min()
-    if min_date_in_data >= min_date_to_show:
+    ]["date_published"]
+    max_date_in_data = filtered_dates.max()
+
+    if max_date_in_data >= min_date_to_show:
         return time_range_selector
     else:
         return "365 * 3"
