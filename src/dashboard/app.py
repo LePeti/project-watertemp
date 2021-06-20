@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, timedelta
 
 import dash
 import dash_core_components as dcc
@@ -51,6 +52,16 @@ app.layout = html.Div(
             id="location-selector",
             multi=True,
         ),
+        dcc.RadioItems(
+            id="time-range-selector",
+            options=[
+                {"label": "All", "value": "365 * 3"},
+                {"label": "Last 30 days", "value": "30"},
+                {"label": "Last 7 days", "value": "7"},
+            ],
+            value="365 * 3",
+            labelStyle={"display": "inline-block"},
+        ),
         html.Br(),
         dcc.Graph(id="water-temp-time-series-graph"),
         dash_table.DataTable(
@@ -91,13 +102,16 @@ app.layout = html.Div(
     Output("water-temp-time-series-graph", "figure"),
     Input("name-of-water-selector", "value"),
     Input("location-selector", "value"),
+    Input("time-range-selector", "value"),
 )
-def filter_fig(name_of_water_filter, locations_filter):
+def filter_fig(name_of_water_filter, locations_filter, time_range_selector):
+    min_date_to_show = datetime.now().date() - timedelta(days=eval(time_range_selector))
     selected_waters = (
         water_temps[["name_of_water", "location", "water_temp_celsius", "date_published"]]
         .loc[
             (water_temps["name_of_water"] == name_of_water_filter)
             & (water_temps["location"].isin(locations_filter))
+            & (water_temps["date_published"] >= min_date_to_show)
         ]
         .sort_values(by="date_published")
     )
@@ -130,6 +144,26 @@ def populate_location_dropdown(name_of_water):
         [{"label": location, "value": location} for location in locations],
         [location for location in locations],
     )
+
+
+@app.callback(
+    Output("time-range-selector", "value"),
+    Input("time-range-selector", "value"),
+    Input("name-of-water-selector", "value"),
+    Input("location-selector", "value"),
+)
+def validate_time_range_selector_input(
+    time_range_selector, name_of_water_filter, locations_filter
+):
+    min_date_to_show = datetime.now().date() - timedelta(days=eval(time_range_selector))
+    min_date_in_data = water_temps.loc[
+        (water_temps["name_of_water"] == name_of_water_filter)
+        & (water_temps["location"].isin(locations_filter))
+    ]["date_published"].min()
+    if min_date_in_data >= min_date_to_show:
+        return time_range_selector
+    else:
+        return "365 * 3"
 
 
 if __name__ == "__main__":
