@@ -67,7 +67,6 @@ app.layout = html.Div(
         dash_table.DataTable(
             id="table",
             columns=[{"name": i, "id": i} for i in water_temps_to_show.columns],
-            data=water_temps_to_show.to_dict("records"),
             page_size=10,
             filter_action="native",
             sort_action="native",
@@ -166,6 +165,22 @@ def validate_time_range_selector_input(
         return time_range_selector
     else:
         return "365 * 3"
+
+
+@app.callback(
+    Output("table", "data"),
+    Input("name-of-water-selector", "value"),
+    Input("location-selector", "value"),
+    Input("time-range-selector", "value"),
+)
+def filter_table(name_of_water_filter, locations_filter, time_range_selector):
+    min_date_to_show = datetime.now().date() - timedelta(days=eval(time_range_selector))
+    selected_waters = water_temps_to_show.loc[
+        (water_temps["name_of_water"] == name_of_water_filter)
+        & (water_temps["location"].isin(locations_filter))
+        & (water_temps["date_published"] >= min_date_to_show)
+    ]
+    return selected_waters.to_dict("records")
 
 
 if __name__ == "__main__":
