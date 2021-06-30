@@ -59,7 +59,7 @@ app.layout = html.Div(
                 {"label": "Last 30 days", "value": "30"},
                 {"label": "Last 7 days", "value": "7"},
             ],
-            value="365 * 3",
+            value="30",
             labelStyle={"display": "inline-block"},
         ),
         html.Br(),
