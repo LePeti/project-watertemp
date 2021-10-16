@@ -80,6 +80,9 @@ scrape-on-heroku: ## Run scarping once on Heroku using a one-off dyno
 scrape-locally: ## Run scarping once locally
 	python -m src.main
 
+query-wt-raw: ## Query and print the results of the water_temp_raw table
+	python -m src.dev.query_local_tables
+
 app: ## Start dash app locally
 	python -m src.dashboard.app
 
