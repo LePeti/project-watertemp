@@ -95,3 +95,7 @@ truncate-raw-locally: ## Delete all raws (truncate) from table 'water-temp-raw' 
 
 truncate-unique-locally: ## Delete all raws (truncate) from table 'water-temp-raw' locally
 	python -m src.dev.truncate_db water_temp_unique
+
+run-psql: ## Run PSQL to query tables locally (only run outside of devcontainer terminal)
+	docker exec -it project-watertemp-pg-db bash -c "PGPASSWORD=secret psql -d postgres -U postgres"
+	# You can always run dbt compile to see a working query
