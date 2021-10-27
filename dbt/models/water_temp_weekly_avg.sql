@@ -1,6 +1,12 @@
 {{
     config(
-        materialized='incremental'
+        materialized='incremental',
+        post_hook=[
+          "DELETE FROM {{ ref('water_temp_unique') }}
+           WHERE date_published::DATE < (
+             SELECT MAX(date_published::DATE) FROM {{ ref('water_temp_unique') }}
+           ) - INTERVAL '2 YEAR';"
+        ]
     )
 }}
 
