@@ -13,7 +13,7 @@ SELECT
   AVG(air_temp_celsius::REAL) AS avg_air_temp_celsius
 FROM {{ ref('water_temp_unique') }}
 {% if is_incremental() %}
-  WHERE date_published > (SELECT max(date_published) FROM {{ this }})
+  WHERE date_published::DATE > (SELECT max(date_published_weekly) FROM {{ this }})
 {% endif %}
 GROUP BY 1, 2, 3
 ORDER BY 3 DESC, 1, 2
