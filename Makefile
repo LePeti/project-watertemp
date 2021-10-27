@@ -23,7 +23,7 @@ build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
 		--cache-from registry.heroku.com/water-temp/web-dev \
 		.
 
-heroku-login: ## loggin into heroku
+heroku-login: ## logging into heroku
 	heroku container:login
 
 up: ## docker-compose up -d
