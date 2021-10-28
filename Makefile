@@ -36,6 +36,9 @@ shell: ## Start a shell session in docker
 	docker-compose up -d
 	docker exec -ti project-watertemp-vsc-dev /usr/bin/zsh
 
+heroku-shell: ## Start a shell in docker on Heroku
+	heroku run -a water-temp bash
+
 dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest , finally test dbt tables (dockerized)
 	@docker run --rm \
 		-v `pwd`/tests:/app/tests:rw \
@@ -98,4 +101,10 @@ truncate-unique-locally: ## Delete all raws (truncate) from table 'water-temp-ra
 
 run-psql: ## Run PSQL to query tables locally (only run outside of devcontainer terminal)
 	docker exec -it project-watertemp-pg-db bash -c "PGPASSWORD=secret psql -d postgres -U postgres"
-	# You can always run dbt compile to see a working query
+
+# You can do the same on heroku's psql, just add (see vars in .env)
+# -h HEROKU_PG_HOST_NAME
+# Or just do
+
+run-psql-heroku: ## Run PSQL on Heroku (only run outside of devcontainer terminal)
+	heroku pg:psql postgresql-reticulated-85975 --app water-temp
