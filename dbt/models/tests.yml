@@ -28,3 +28,16 @@ models:
         description: Date when the data was published on the website
         tests:
           - not_null
+  - name: water_temp_weekly_avg
+    tests:
+      - unique:
+          column_name: "location || '-' || name_of_water || '-' || date_published_weekly"
+    columns:
+      - name: location
+        description: Location where the temperature measurement was undertaken
+        tests:
+          - not_null
+      - name: date_published_weekly
+        description: Week start dates
+        tests:
+          - not_null
