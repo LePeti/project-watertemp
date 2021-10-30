@@ -80,6 +80,9 @@ init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks
 scrape-on-heroku: ## Run scarping once on Heroku using a one-off dyno
 	heroku run -a water-temp python -m src.main
 
+heroku-dbt-test: ## Run dbt test on heroku
+	heroku run -a water-temp dbt test
+
 scrape-locally: ## Run scarping once locally
 	python -m src.main
 
