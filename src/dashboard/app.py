@@ -24,7 +24,7 @@ app = dash.Dash(
 )
 
 water_temps = query_water_temps_unique().sort_values(
-    ["name_of_water", "location", "date_published"]
+    ["name_of_water", "date_published", "location"], ascending=[True, False, True]
 )
 
 water_temps_to_show = water_temps[
