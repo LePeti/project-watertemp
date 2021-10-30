@@ -42,12 +42,14 @@
         "innoverio.vscode-dbt-power-user",
         "samuelcolvin.jinjahtml",
         "gruntfuggly.todo-tree",
-        "lkytal.pomodoro"
+        "lkytal.pomodoro",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [
-    //     5432
-    // ],
+    "forwardPorts": [
+        5432
+    ]
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "uname -a",
     // Uncomment to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
