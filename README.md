@@ -22,7 +22,8 @@
 
 ## CI/CD
 
-+ On commit, the `.githooks/pre-commit` script will run `make test`. If it fails, the commit won't happen
++ On commit, the `.githooks/pre-commit` script will run `make test`. If it fails, the commit will fail too
 + On push, a Github Action CI will trigger which is configured in `.github/workflows/workflow.yml`
++ **Note**, CI will only trigger when a file listed in `.github/workflows/workflow.yml` under `paths` changes
 + Github Actions is configured to test and then to push the prod and dev image to Heroku's registry, finally to deploy the prod image into production
 + Add `[skip ci]` to the commit message to skip CI (e.g. when only modifying this `README`). [Source](https://github.blog/changelog/2021-02-08-github-actions-skip-pull-request-and-push-workflows-with-skip-ci/)
