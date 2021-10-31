@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: table_stats
+    tests:
+      - unique:
+          column_name: "date || '-' || relname"

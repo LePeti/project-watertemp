@@ -1,6 +1,10 @@
 version: 2
 
 sources:
+  - name: pg_catalog
+    description: PG generated user table stats
+    tables:
+      - name: pg_stat_user_tables
   - name: public
     description: tbd
     tables:
