@@ -13,8 +13,8 @@ from dotenv import load_dotenv
 
 from src.functions.db import query_water_temps_unique
 
-load_dotenv()
-port = int(os.environ.get("PORT", 8050))
+load_dotenv("/.env")
+port = int(os.environ.get("PORT", 8060))
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
