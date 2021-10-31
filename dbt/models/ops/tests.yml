@@ -4,4 +4,4 @@ models:
   - name: table_stats
     tests:
       - unique:
-          column_name: "date || '-' || relname"
+          column_name: "date || '-' || table_name"
