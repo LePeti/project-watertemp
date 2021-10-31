@@ -75,7 +75,7 @@ app.layout = html.Div(
         html.Hr(),
         html.Div(
             [
-                "Source: ",
+                "Data source: ",
                 html.A(
                     "https://www.eumet.hu/vizhomerseklet/",
                     href="https://www.eumet.hu/vizhomerseklet/",
