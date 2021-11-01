@@ -2,16 +2,17 @@ import os
 from datetime import datetime, timedelta
 
 import dash
-import flask
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
+import flask
 import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
 from dotenv import load_dotenv
 
-from src.functions.db import query_water_temps_unique
+from src.functions.db import query_water_temps_unique, query_table_stats
+from src.functions.table_stats_plot import plot_table_stats
 
 load_dotenv("/.env")
 port = int(os.environ.get("PORT", 8060))
@@ -27,6 +28,8 @@ water_temps = query_water_temps_unique().sort_values(
     ["name_of_water", "date_published", "location"], ascending=[True, False, True]
 )
 
+table_stats = query_table_stats().sort_values(["date", "table_name"])
+
 water_temps_to_show = water_temps[
     [
         "date_published",
@@ -40,37 +43,56 @@ water_temps_to_show = water_temps[
 app.layout = html.Div(
     [
         html.H1(children="Historical natural water temperatures"),
-        dcc.Dropdown(
-            id="name-of-water-selector",
-            options=[
-                {"label": water, "value": water}
-                for water in pd.unique(water_temps["name_of_water"].values)
-            ],
-            value="Magyar tavak",
-        ),
-        dcc.Dropdown(
-            id="location-selector",
-            multi=True,
-        ),
-        dcc.RadioItems(
-            id="time-range-selector",
-            options=[
-                {"label": "All", "value": "365 * 3"},
-                {"label": "Last 30 days", "value": "30"},
-                {"label": "Last 7 days", "value": "7"},
-            ],
-            value="30",
-            labelStyle={"display": "inline-block"},
-        ),
-        html.Br(),
-        dcc.Graph(id="water-temp-time-series-graph"),
-        dash_table.DataTable(
-            id="table",
-            columns=[{"name": i, "id": i} for i in water_temps_to_show.columns],
-            page_size=10,
-            filter_action="native",
-            sort_action="native",
-            sort_mode="multi",
+        dcc.Tabs(
+            [
+                dcc.Tab(
+                    label="Water temperatures",
+                    children=[
+                        dcc.Dropdown(
+                            id="name-of-water-selector",
+                            options=[
+                                {"label": water, "value": water}
+                                for water in pd.unique(
+                                    water_temps["name_of_water"].values
+                                )
+                            ],
+                            value="Magyar tavak",
+                        ),
+                        dcc.Dropdown(
+                            id="location-selector",
+                            multi=True,
+                        ),
+                        dcc.RadioItems(
+                            id="time-range-selector",
+                            options=[
+                                {"label": "All", "value": "365 * 3"},
+                                {"label": "Last 30 days", "value": "30"},
+                                {"label": "Last 7 days", "value": "7"},
+                            ],
+                            value="30",
+                            labelStyle={"display": "inline-block"},
+                        ),
+                        html.Br(),
+                        dcc.Graph(id="water-temp-time-series-graph"),
+                        dash_table.DataTable(
+                            id="table",
+                            columns=[
+                                {"name": i, "id": i} for i in water_temps_to_show.columns
+                            ],
+                            page_size=10,
+                            filter_action="native",
+                            sort_action="native",
+                            sort_mode="multi",
+                        ),
+                    ],
+                ),
+                dcc.Tab(
+                    label="Ops - Table stats",
+                    children=[
+                        dcc.Graph(id="table-stats", figure=plot_table_stats(table_stats))
+                    ],
+                ),
+            ]
         ),
         html.Hr(),
         html.Div(

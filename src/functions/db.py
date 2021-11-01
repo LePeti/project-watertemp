@@ -25,6 +25,17 @@ def query_water_temps_unique():
     return water_temps
 
 
+def query_table_stats():
+    db_string = concat_conn_string()
+    engine = create_engine(db_string)
+    query_string = f"SELECT * FROM {os.getenv('PG_DB_NAME')}.public.table_stats"
+    with engine.connect() as con:
+        table_stats = pd.read_sql(query_string, con)
+    table_stats["row_count"] = pd.to_numeric(table_stats["row_count"])
+    table_stats["date"] = pd.to_datetime(table_stats["date"]).dt.date
+    return table_stats
+
+
 def concat_conn_string():
     return (
         f"postgresql+psycopg2://"
