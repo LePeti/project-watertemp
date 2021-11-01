@@ -1,7 +1,14 @@
 {{
     config(
         materialized='incremental',
-        unique_key='date || table_name'
+        unique_key='date || table_name',
+        pre_hook=[
+            "{% set tables_to_analyze = [ref('water_temp_unique'), ref('water_temp_weekly_avg'), this] %}
+
+            {%- for table in tables_to_analyze %}
+                ANALYZE {{ table }};
+            {% endfor %}"
+        ]
     )
 }}
 
