@@ -12,14 +12,37 @@
     )
 }}
 
--- // TODO add total and 10K row limit
-SELECT CURRENT_DATE AS date,
-    relname AS table_name,
-    n_live_tup AS row_count
-FROM {{ source('pg_catalog', 'pg_stat_user_tables') }}
-WHERE schemaname = 'public'
-    AND (
-        relname LIKE 'water_temp_%'
-        OR relname LIKE 'table_stats'
-    )
-ORDER BY relname
+(
+    SELECT CURRENT_DATE AS date,
+        relname AS table_name,
+        n_live_tup AS row_count
+    FROM {{ source('pg_catalog', 'pg_stat_user_tables') }}
+    WHERE schemaname = 'public'
+        AND (
+            relname LIKE 'water_temp_%'
+            OR relname LIKE 'table_stats'
+        )
+    ORDER BY relname
+)
+
+UNION ALL
+
+(
+    SELECT CURRENT_DATE AS date,
+        'total' AS table_name,
+        SUM(n_live_tup) AS row_count
+    FROM {{ source('pg_catalog', 'pg_stat_user_tables') }}
+    WHERE schemaname = 'public'
+        AND (
+            relname LIKE 'water_temp_%'
+            OR relname LIKE 'table_stats'
+        )
+)
+
+UNION ALL
+
+(
+    SELECT CURRENT_DATE AS date,
+    'db_limit' AS table_name,
+    10000 AS row_count
+)
