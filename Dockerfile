@@ -11,10 +11,10 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 RUN rm -rf requirements.txt
 
-COPY src src
-COPY dbt dbt
-COPY dbt_project.yml dbt_project.yml
-
 ENV DBT_PROFILES_DIR /app/dbt
+
+COPY dbt_project.yml dbt_project.yml
+COPY dbt dbt
+COPY src src
 
 CMD python -m src.dashboard.app
