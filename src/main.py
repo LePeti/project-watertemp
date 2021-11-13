@@ -89,7 +89,7 @@ if __name__ == "__main__":
         "%Y-%m-%d %H:%M:%S"
     )
     water_temp_data["date_published"] = date_published
-
+    # TODO Log warning when date_published and time_of_scraping --> date mismatch
     if (num_cols := len(water_temp_data.columns)) != 7:
         logging.error(f"Expected 7 columns of data but found {num_cols}.")
 

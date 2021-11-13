@@ -71,7 +71,7 @@ dockerized-format: ## Format code with black, then run codestyle checks (dockeri
 clean: ## Delete /.pytest_cache and tests/__pycache__
 	rm -rf .pytest_cache **/__pycache__
 	dbt clean
-	# FIX: didn't clean up in functions folder
+	# TODO: didn't clean up in functions folder
 
 init-githook: ## Remove any symlink from .git/hooks, then symlink the /.githooks folder into .git/hooks (this way we can share git-hooks on github)
 	find .git/hooks -type l -exec rm {} \;

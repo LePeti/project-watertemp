@@ -12,6 +12,7 @@
     )
 }}
 
+-- // TODO add total and 10K row limit
 SELECT CURRENT_DATE AS date,
     relname AS table_name,
     n_live_tup AS row_count

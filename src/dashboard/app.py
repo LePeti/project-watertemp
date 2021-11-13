@@ -18,7 +18,6 @@ load_dotenv("/.env")
 port = int(os.environ.get("PORT", 8060))
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
-
 f_app = flask.Flask(__name__)
 app = dash.Dash(
     __name__, external_stylesheets=external_stylesheets, title="Water temp", server=f_app
