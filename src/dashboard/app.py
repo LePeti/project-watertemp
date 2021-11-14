@@ -41,7 +41,7 @@ water_temps_to_show = water_temps[
 
 app.layout = html.Div(
     [
-        html.H1(children="Historical natural water temperatures"),
+        html.H1(children="Natural water temperatures"),
         dcc.Tabs(
             [
                 dcc.Tab(
@@ -98,7 +98,7 @@ app.layout = html.Div(
             [
                 "Data source: ",
                 html.A(
-                    "https://www.eumet.hu/vizhomerseklet/",
+                    "www.eumet.hu/vizhomerseklet",
                     href="https://www.eumet.hu/vizhomerseklet/",
                 ),
                 ". Scraped daily at 10 am UTC.",
