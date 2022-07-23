@@ -56,6 +56,7 @@ def extract_publish_date(soup):
 
 if __name__ == "__main__":
 
+    # Scrape the water temperature data
     logging.basicConfig(level=logging.INFO)
     time_of_scraping = datetime.now(timezone("CET"))
     logging.info(
@@ -85,6 +86,7 @@ if __name__ == "__main__":
     water_temp_data.reset_index(inplace=True)
     water_temp_data.rename(columns={"index": "location"}, inplace=True)
 
+    # Add helper columns
     water_temp_data["time_of_scraping_cet"] = time_of_scraping.strftime(
         "%Y-%m-%d %H:%M:%S"
     )
@@ -93,6 +95,7 @@ if __name__ == "__main__":
     if (num_cols := len(water_temp_data.columns)) != 7:
         logging.error(f"Expected 7 columns of data but found {num_cols}.")
 
+    # Clean column names
     water_temp_data.rename(
         columns={
             "cm": "water_depth_cm",
@@ -103,6 +106,20 @@ if __name__ == "__main__":
     )
 
     water_temp_data.replace(to_replace=" (cm|°C)", value="", inplace=True, regex=True)
+
+    # Remove some water temperature data (to save db space)
+    water_temp_data = water_temp_data[
+        water_temp_data.name_of_water.isin(
+            [
+                "Magyar tavak",
+                "Adriai-tenger",
+                "Tengerek",
+                "Tisza",
+                "Duna",
+                "Földközi-tenger",
+            ]
+        )
+    ]
 
     db = create_engine(concat_conn_string())
     try:
