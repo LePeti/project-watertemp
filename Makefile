@@ -48,7 +48,7 @@ dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with p
 			"flake8 --max-line-length 90 src tests; \
 			pytest tests"
 
-test: ## Run flake8 syntax and codestyle check, then run tests with pytest , finally test dbt tables
+test: ## Run flake8 syntax and codestyle check, then run tests with pytest, finally test dbt tables
 	flake8 --max-line-length 90 src tests
 	pytest tests
 	make clean
