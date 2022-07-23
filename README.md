@@ -27,3 +27,12 @@
 + **Note**, CI will only trigger when a file listed in `.github/workflows/workflow.yml` under `paths` changes. [Source](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths).
 + Github Actions is configured to test and then to push the prod and dev image to Heroku's registry, finally to deploy the prod image into production
 + Add `[skip ci]` to the commit message to skip CI (e.g. when only modifying this `README`). [Source](https://github.blog/changelog/2021-02-08-github-actions-skip-pull-request-and-push-workflows-with-skip-ci/).
+
+## Dev. resources
+
+### Useful Postgre (PG) CLI commands
+
++ `make run-psql` or `make run-psql-heroku` will start up the PG cli (run it outside of the dev docker container)
++ `\d` will list your tables
++ __SELECT__: `select * from water_temp_unique limit 10;`
++ __DELETE__: `delete from water_temp_unique where location in ('Szelidi-tó')`
