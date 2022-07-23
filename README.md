@@ -36,3 +36,12 @@
 + `\d` will list your tables
 + __SELECT__: `select * from water_temp_unique limit 10;`
 + __DELETE__: `delete from water_temp_unique where location in ('Szelidi-tó')`
+
+
+### How to log in from Github Actions (docker) to Heroku?
+
++ This is done via a Heroku api token
++ First, log in to Heroku from the terminal (`heroku login`)
++ A long-lived token was generated using `heroku authorizations:create`
++ Check all your tokens by typing `heroku authorizations`
++ Add the *token* (see output of the above `create` command) to the Github secret `HEROKU_API_KEY`. Find it under the *Github repo > settings > secrets*.
