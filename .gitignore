@@ -8,3 +8,6 @@ dbt/dbt_modules/
 dbt/logs/
 dbt/.user.yml
 **/.DS_Store
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/targets.log
