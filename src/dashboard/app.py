@@ -11,7 +11,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 from dotenv import load_dotenv
 
-from src.functions.db import query_water_temps_unique, query_table_stats
+from src.functions.db import query_table_stats, query_water_temps_unique
 from src.functions.table_stats_plot import plot_table_stats
 
 load_dotenv("/.env")
