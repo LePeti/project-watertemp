@@ -1,15 +1,19 @@
-FROM python:3.8-slim-buster
+FROM python:3.12-slim-bookworm
+
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        libpq-dev gcc curl ca-certificates python3-dev
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ENV UV_PROJECT_ENVIRONMENT=/user/local
 
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y \
-    libpq-dev \
-    gcc
-
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-RUN rm -rf requirements.txt
+COPY uv.lock pyproject.toml ./
+RUN uv sync
+RUN rm uv.lock pyproject.toml
 
 ENV DBT_PROFILES_DIR /app/dbt
 

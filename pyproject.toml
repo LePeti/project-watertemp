@@ -1,0 +1,32 @@
+[project]
+name = "project-watertemp-dev"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.11.2",
+    "black>=25.1.0",
+    "dash>=2.6.0",
+    "dash-core-components>=2.0.0",
+    "dash-html-components>=2.0.0",
+    "dash-renderer>=1.9.1",
+    "dash-table>=5.0.0",
+    "dateparser>=1.1.8",
+    "dbt-core>=1.1.1",
+    "dbt-postgres>=1.1.1",
+    "flake8>=7.1.2",
+    "html5lib>=1.1",
+    "ipykernel>=6.29.5",
+    "isort>=6.0.1",
+    "mock>=5.2.0",
+    "pandas>=2.2.0",
+    "pipdeptree>=2.26.0",
+    "plotnine>=0.14.5",
+    "psycopg2>=2.9.6",
+    "pytest>=8.3.5",
+    "python-dotenv>=0.17.1",
+    "requests>=2.23.0",
+    "rope>=1.13.0",
+    "sqlalchemy>=2.0.40",
+]
