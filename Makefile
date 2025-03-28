@@ -12,7 +12,6 @@ build: ## Build based on Dockerfile and name it 'project-watertemp'
 		-t project-watertemp \
 		-f Dockerfile \
 		--build-arg BUILDKIT_INLINE_CACHE=1 \
-		--cache-from registry.heroku.com/water-temp/web \
 		.
 
 build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
@@ -20,7 +19,6 @@ build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
 		-t project-watertemp-dev \
 		-f dev.Dockerfile \
 		--build-arg BUILDKIT_INLINE_CACHE=1 \
-		--cache-from registry.heroku.com/water-temp/web-dev \
 		.
 
 heroku-login: ## logging into heroku
@@ -104,6 +102,8 @@ truncate-unique-locally: ## Delete all raws (truncate) from table 'water-temp-ra
 
 run-psql: ## Run PSQL to query tables locally (only run outside of devcontainer terminal)
 	docker exec -it project-watertemp-pg-db bash -c "PGPASSWORD=secret psql -d postgres -U postgres"
+
+# docker exec -it project-watertemp-pg-db bash -c "PGPASSWORD=secret psql -d postgres -U postgres"
 
 # You can do the same on heroku's psql, just add (see vars in .env)
 # -h HEROKU_PG_HOST_NAME
