@@ -35,7 +35,9 @@ def scrape_watertemp_tables():
 def extract_publish_date(soup):
     date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
     date_published_hun = date_published_text_hun[8:]
-    date_published = dateparser.parse(date_published_hun).strftime("%Y-%m-%d")
+    date_published = dateparser.parse(date_published_hun, languages=["hu"]).strftime(
+        "%Y-%m-%d"
+    )
     expected_date_published_format = "20\\d\\d\\. [A-zÀ-ÿ]+ \\d{1,2}\\."
     date_published_matches_expectation = bool(
         re.match(expected_date_published_format, date_published_hun)
