@@ -7,7 +7,7 @@ RUN apt-get update && \
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-ENV UV_PROJECT_ENVIRONMENT=/user/local
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
 
 WORKDIR /app
 
