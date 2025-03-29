@@ -16,12 +16,13 @@ services:
     image: postgres:15.3
     container_name: project-watertemp-pg-db
     environment:
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
-      - PGDATA=/data/pgdata
+      - POSTGRES_DB=postgres
     ports:
       - 5432:5432
     volumes:
-      - postgres-data:/data/pgdata
+      - db:/var/lib/postgresql/data
 
   prod:
     image: project-watertemp
@@ -33,4 +34,5 @@ services:
     command: sleep infinity
 
 volumes:
-  postgres-data:
+  db:
+    driver: local
