@@ -205,4 +205,4 @@ def filter_table(name_of_water_filter, locations_filter, time_range_selector):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=False, host="0.0.0.0", port=port)
+    app.run(debug=False, host="0.0.0.0", port=port)
