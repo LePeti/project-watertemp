@@ -11,3 +11,4 @@ dbt/.user.yml
 .vscode/configurationCache.log
 .vscode/dryrun.log
 .vscode/targets.log
+.vscode/mcp.json
