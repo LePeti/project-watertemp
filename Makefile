@@ -5,20 +5,16 @@
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-export DOCKER_BUILDKIT=1
-
 build: ## Build based on Dockerfile and name it 'project-watertemp'
 	docker build \
 		-t project-watertemp \
 		-f Dockerfile \
-		--build-arg BUILDKIT_INLINE_CACHE=1 \
 		.
 
 build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
 	docker build \
 		-t project-watertemp-dev \
 		-f dev.Dockerfile \
-		--build-arg BUILDKIT_INLINE_CACHE=1 \
 		.
 
 heroku-login: ## logging into heroku
