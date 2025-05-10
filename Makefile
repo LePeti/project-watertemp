@@ -33,17 +33,17 @@ shell: ## Start a shell session in docker
 heroku-shell: ## Start a shell in docker on Heroku
 	heroku run -a water-temp bash
 
-dockerized-test: ## Run flake8 syntax and codestyle check, then run tests with pytest, finally test dbt tables (dockerized)
+dockerized-test: ## Run ruff syntax and codestyle check, then run tests with pytest (dockerized)
 	@docker run --rm \
 		-v `pwd`/tests:/app/tests:rw \
 		--name project-watertemp-test \
 		project-watertemp-dev \
 		/bin/bash -c \
-			"flake8 --max-line-length 90 src tests; \
+			"uv run ruff check src tests; \
 			pytest tests"
 
-test: ## Run flake8 syntax and codestyle check, then run tests with pytest, finally test dbt tables
-	flake8 --max-line-length 90 src tests
+test: ## Run ruff syntax and codestyle check, then run tests with pytest
+	uv run ruff check src tests
 	pytest tests
 	make clean
 
