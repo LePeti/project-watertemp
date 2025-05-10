@@ -1,61 +1,45 @@
 {
     "name": "project-watertemp-dev",
-    // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
     "dockerComposeFile": "../docker-compose.yml",
     "service": "vscode-dev",
-    // Set *default* container specific settings.json values on container create.
-    "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh",
-        "python.pythonPath": "/usr/local/bin/python",
-        "jupyter.notebookFileRoot": "${workspaceFolder}",
-        // automatically reload changes made to imported files without having to restart the interactive session.
-        "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2",
-        "python.formatting.provider": "black",
-        "python.formatting.blackArgs": [
-            "--line-length=90"
-        ],
-        "python.linting.flake8Enabled": true,
-        "python.linting.flake8Args": [
-            "--max-line-length 90",
-            "--extend-ignore E203,W503" // this makes flake8 compatible w/ black
-        ],
-        "editor.rulers": [
-            90
-        ],
-        "python.sortImports.path": "/usr/local/bin/isort"
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "python.pythonPath": "/usr/local/bin/python",
+                "jupyter.notebookFileRoot": "${workspaceFolder}",
+                "jupyter.runStartupCommands": "%load_ext autoreload\n%autoreload 2",
+                "python.formatting.provider": "ruff",
+                "python.linting.ruff": true,
+                "editor.rulers": [
+                    90
+                ]
+            },
+            "extensions": [
+                "ms-vscode.sublime-keybindings",
+                "vscode-icons-team.vscode-icons",
+                "sleistner.vscode-fileutils",
+                "eamodio.gitlens",
+                "vtrois.gitmoji-vscode",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-python.vscode-pylance",
+                "njpwerner.autodocstring",
+                "ms-azuretools.vscode-docker",
+                "samuelcolvin.jinjahtml",
+                "gruntfuggly.todo-tree",
+                "mtxr.sqltools",
+                "mtxr.sqltools-driver-pg",
+                "ms-python.mypy-type-checker",
+                "charliermarsh.ruff",
+                "streetsidesoftware.code-spell-checker",
+                "tamasfe.even-better-toml"
+            ],
+            "remoteUser": "vscode"
+        }
     },
-    // "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
     "workspaceFolder": "/app",
-    // Add the IDs of extensions you want installed when the container is created.
-    "extensions": [
-        "ms-vscode.sublime-keybindings",
-        "vscode-icons-team.vscode-icons",
-        "sleistner.vscode-fileutils",
-        "eamodio.gitlens",
-        "vtrois.gitmoji-vscode",
-        "ms-python.python",
-        "ms-toolsai.jupyter",
-        "ms-python.vscode-pylance",
-        "njpwerner.autodocstring",
-        "ms-azuretools.vscode-docker",
-        "bastienboutonnet.vscode-dbt",
-        "innoverio.vscode-dbt-power-user",
-        "samuelcolvin.jinjahtml",
-        "gruntfuggly.todo-tree",
-        "lkytal.pomodoro",
-        "mtxr.sqltools",
-        "mtxr.sqltools-driver-pg"
-    ],
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
     "forwardPorts": [
         5432
     ]
-    // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "uname -a",
-    // Uncomment to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
-    // "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-    // Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-    // "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
-    // Comment out connect as root instead. To add a non-root user, see: https://aka.ms/vscode-remote/containers/non-root.
-    // "remoteUser": "vscode"
 }
