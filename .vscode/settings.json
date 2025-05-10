@@ -11,20 +11,17 @@
             "askForPassword": true
         },
         {
-            "name": "heroku-pgdb-ssl",
             "previewLimit": 50,
-            "server": "ec2-54-155-226-153.eu-west-1.compute.amazonaws.com",
+            "server": "34.118.61.26",
             "port": 5432,
             "askForPassword": true,
             "driver": "PostgreSQL",
-            "database": "db6osf7hrio6sn",
-            "username": "ggfozeukcfzbna",
-            "pgOptions": {
-                "ssl": {
-                    "rejectUnauthorized": false,
-                    "requestCert": false
-                }
-            }
+            "name": "gcp-pgdb",
+            "database": "water_temp",
+            "username": "postgres"
         }
+    ],
+    "cSpell.words": [
+        "watertemp"
     ]
 }
