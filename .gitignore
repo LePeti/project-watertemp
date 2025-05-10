@@ -13,3 +13,4 @@ dbt/.user.yml
 .vscode/targets.log
 .vscode/mcp.json
 logs/dbt.log
+target/*
