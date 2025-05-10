@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from pytz import timezone
 from sqlalchemy import create_engine
 
-from src.functions.db import concat_conn_string, concat_gcp_conn_string
+from src.functions.db import concat_gcp_conn_string
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
 
     try:
         logging.info(f"connection string: {concat_gcp_conn_string()}")
-        engine = create_engine(concat_conn_string())
+        engine = create_engine(concat_gcp_conn_string())
         dbConnection = engine.connect()
         logging.info("Successfully connected to database.")
 
