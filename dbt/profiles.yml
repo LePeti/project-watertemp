@@ -1,12 +1,21 @@
 water-temp:
-  target: prod
+  target: local
   outputs:
-    prod:
+    local:
       type: postgres
       host: "{{ env_var('PG_HOST_NAME') }}"
       user: "{{ env_var('PG_USER_NAME') }}"
       password: "{{ env_var('PG_PASSWORD') }}"
       port: "{{ env_var('PG_PORT') | as_number }}"
       dbname: "{{ env_var('PG_DB_NAME') }}"
+      schema: public
+      threads: 4
+    prod:
+      type: postgres
+      host: "{{ env_var('GCP_PG_HOST_NAME') }}"
+      user: "{{ env_var('GCP_PG_USER_NAME') }}"
+      password: "{{ env_var('GCP_PG_PASSWORD') }}"
+      port: "{{ env_var('GCP_PG_PORT') | as_number }}"
+      dbname: "{{ env_var('GCP_PG_DB_NAME') }}"
       schema: public
       threads: 4
