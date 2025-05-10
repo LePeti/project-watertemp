@@ -33,7 +33,10 @@
                 "ms-python.mypy-type-checker",
                 "charliermarsh.ruff",
                 "streetsidesoftware.code-spell-checker",
-                "tamasfe.even-better-toml"
+                "tamasfe.even-better-toml",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "GitHub.vscode-github-actions"
             ],
             "remoteUser": "vscode"
         }
