@@ -40,9 +40,7 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           project_id: 'water-temp-dash'
-          token_format: 'access_token'
           workload_identity_provider: 'projects/576787685789/locations/global/workloadIdentityPools/github/providers/my-github-repo'
-          service_account: 'github-action@water-temp-dash.iam.gserviceaccount.com'
       - name: Build base image
         run: make build
       - name: Build dev image
