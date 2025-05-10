@@ -1,6 +1,10 @@
 # name of your pipeline
 name: CI
 
+permissions:
+  id-token: write
+  contents: read
+
 # define some actions filters, when this build should be triggered
 # here it is only triggered if a push is made on the master branch
 on:
@@ -31,26 +35,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Login to Heroku Container registry
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
+        uses: actions/checkout@v4
+      - name: Login to GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: 'water-temp-dash'
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/576787685789/locations/global/workloadIdentityPools/github/providers/my-github-repo'
+          service_account: 'github-action@water-temp-dash.iam.gserviceaccount.com'
       - name: Build base image
         run: make build
       - name: Build dev image
         run: make build-dev
       - name: Test app
         run: make dockerized-test
-      - name: Push prod image to Heroku container registry
+      - name: Push prod image to GCP container registry
         run: |
-          docker tag project-watertemp registry.heroku.com/water-temp/web
-          docker push registry.heroku.com/water-temp/web
-      - name: Release to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a water-temp web
-      - name: Push dev image to Heroku container registry
-        run: |
-          docker tag project-watertemp-dev registry.heroku.com/water-temp/web-dev
-          docker push registry.heroku.com/water-temp/web-dev
+          docker tag project-watertemp europe-central2-docker.pkg.dev/water-temp-dash/water-temp-container-repo/project-watertemp
+          docker push europe-central2-docker.pkg.dev/water-temp-dash/water-temp-container-repo/project-watertemp
