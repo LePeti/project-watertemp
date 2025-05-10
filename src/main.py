@@ -6,10 +6,13 @@ import dateparser
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 from pytz import timezone
 from sqlalchemy import create_engine
 
-from src.functions.db import concat_conn_string
+from src.functions.db import concat_conn_string, concat_gcp_conn_string
+
+logging.basicConfig(level=logging.DEBUG)
 
 URL = "https://www.eumet.hu/vizhomerseklet/"
 
@@ -17,7 +20,9 @@ URL = "https://www.eumet.hu/vizhomerseklet/"
 def get_watertemp_page():
     page = requests.get(URL)
     if page.status_code == 200:
-        logging.info(f"Requesting '{page.url}' returned status code {page.status_code}.")
+        logging.info(
+            f"Requesting '{page.url}' returned status code {page.status_code}."
+        )
     else:
         logging.error(
             f"Requesting '{page.url}' returned status code {page.status_code}. "
@@ -33,7 +38,7 @@ def scrape_watertemp_tables():
 
 
 def extract_publish_date(soup):
-    date_published_text_hun = soup.find("p", text=re.compile("Kiadva.*")).get_text()
+    date_published_text_hun = soup.find("p", string=re.compile("Kiadva.*")).get_text()
     date_published_hun = date_published_text_hun[8:]
     date_published = dateparser.parse(date_published_hun, languages=["hu"]).strftime(
         "%Y-%m-%d"
@@ -57,12 +62,12 @@ def extract_publish_date(soup):
 
 
 if __name__ == "__main__":
+    load_dotenv("/app/.env")
 
     # Scrape the water temperature data
-    logging.basicConfig(level=logging.INFO)
     time_of_scraping = datetime.now(timezone("CET"))
     logging.info(
-        f"Started scraping at " f"{time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
+        f"Started scraping at {time_of_scraping.strftime('%Y-%m-%d %H:%M:%S %Z')}."
     )
 
     page = get_watertemp_page()
@@ -76,7 +81,9 @@ if __name__ == "__main__":
         lambda x: BeautifulSoup.get_text(x).capitalize(), names_of_waters_html
     )
     if len(water_temp_data_tables) != 11 or len(names_of_waters_html) != 11:
-        logging.error(f"11 tables were expected but found {len(water_temp_data_tables)}.")
+        logging.error(
+            f"11 tables were expected but found {len(water_temp_data_tables)}."
+        )
         logging.error(
             f"11 tables names were expected but found {len(names_of_waters_html)}."
         )
@@ -124,6 +131,7 @@ if __name__ == "__main__":
     ]
 
     try:
+        logging.info(f"connection string: {concat_gcp_conn_string()}")
         engine = create_engine(concat_conn_string())
         dbConnection = engine.connect()
         logging.info("Successfully connected to database.")
