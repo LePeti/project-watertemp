@@ -36,10 +36,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Login to GCP
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
           project_id: 'water-temp-dash'
+          service_account: 'github-action@water-temp-dash.iam.gserviceaccount.com'
           workload_identity_provider: 'projects/576787685789/locations/global/workloadIdentityPools/github/providers/my-github-repo'
       - name: Build base image
         run: make build
