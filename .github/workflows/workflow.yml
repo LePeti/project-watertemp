@@ -42,7 +42,6 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           project_id: 'water-temp-dash'
-          token_format: 'id_token'
           workload_identity_provider: 'projects/576787685789/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
 
       - name: Build base image
