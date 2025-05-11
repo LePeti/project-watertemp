@@ -1,16 +1,23 @@
 tests/__pycache__/*
 *.pyc
 data/
-.vscode/.ropeproject/objectdb
-dbt/target/
 .env
-dbt/dbt_modules/
-dbt/logs/
-dbt/.user.yml
+
 **/.DS_Store
+
+# vscode
 .vscode/configurationCache.log
 .vscode/dryrun.log
 .vscode/targets.log
-.vscode/mcp.json
+.vscode/.ropeproject/objectdb
+
+# dbt
 logs/dbt.log
+dbt/dbt_modules/
+dbt/logs/
+dbt/.user.yml
+dbt/target/
 target/*
+
+# Ignore generated credentials from google-github-actions/auth
+gha-creds-*.json
