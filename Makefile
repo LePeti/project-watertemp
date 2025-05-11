@@ -21,8 +21,6 @@ build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
 		-t project-watertemp-dev \
 		-f dev.Dockerfile \
 		--build-arg BUILDKIT_INLINE_CACHE=1 \
-		--cache-from=type=registry,ref=europe-central2-docker.pkg.dev/water-temp-dash/water-temp-container-repo/project-watertemp-dev:latest \
-        --cache-to=type=registry,ref=europe-central2-docker.pkg.dev/water-temp-dash/water-temp-container-repo/project-watertemp-dev:latest,mode=max \
 		.
 
 heroku-login: ## logging into heroku
