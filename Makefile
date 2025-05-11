@@ -13,7 +13,6 @@ build: ## Build based on Dockerfile and name it 'project-watertemp'
 		-f Dockerfile \
 		--build-arg BUILDKIT_INLINE_CACHE=1 \
 		--cache-from=type=registry,ref=europe-central2-docker.pkg.dev/water-temp-dash/water-temp-container-repo/project-watertemp:latest \
-        --cache-to=type=registry,ref=europe-central2-docker.pkg.dev/water-temp-dash/water-temp-container-repo/project-watertemp:latest,mode=max \
 		.
 
 build-dev: ## Build based on dev.Dockerfile and name it 'project-watertemp-dev'
