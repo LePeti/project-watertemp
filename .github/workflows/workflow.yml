@@ -40,9 +40,8 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
-          project_id: 'water-temp-dash'
-          service_account: 'github-action@water-temp-dash.iam.gserviceaccount.com'
-          workload_identity_provider: 'projects/576787685789/locations/global/workloadIdentityPools/github/providers/my-github-repo'
+          token_format: 'id_token'
+          workload_identity_provider: 'projects/576787685789/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
       - name: Build base image
         run: make build
       - name: Build dev image
