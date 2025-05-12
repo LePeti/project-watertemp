@@ -2,12 +2,10 @@ import os
 from datetime import datetime, timedelta
 
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table
 import flask
 import pandas as pd
 import plotly.express as px
+from dash import dash_table, dcc, html
 from dash.dependencies import Input, Output
 from dotenv import load_dotenv
 
@@ -15,12 +13,15 @@ from src.functions.db import query_table_stats, query_water_temps_unique
 from src.functions.table_stats_plot import plot_table_stats
 
 load_dotenv("/.env")
-port = int(os.environ.get("PORT", 8060))
+port = int(os.environ.get("PORT", 8080))
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 f_app = flask.Flask(__name__)
 app = dash.Dash(
-    __name__, external_stylesheets=external_stylesheets, title="Water temp", server=f_app
+    __name__,
+    external_stylesheets=external_stylesheets,
+    title="Water temp",
+    server=f_app,
 )
 
 water_temps = query_water_temps_unique().sort_values(
@@ -76,7 +77,8 @@ app.layout = html.Div(
                         dash_table.DataTable(
                             id="table",
                             columns=[
-                                {"name": i, "id": i} for i in water_temps_to_show.columns
+                                {"name": i, "id": i}
+                                for i in water_temps_to_show.columns
                             ],
                             page_size=10,
                             filter_action="native",
@@ -88,7 +90,9 @@ app.layout = html.Div(
                 dcc.Tab(
                     label="Ops - Table stats",
                     children=[
-                        dcc.Graph(id="table-stats", figure=plot_table_stats(table_stats))
+                        dcc.Graph(
+                            id="table-stats", figure=plot_table_stats(table_stats)
+                        )
                     ],
                 ),
             ]
@@ -127,7 +131,9 @@ app.layout = html.Div(
 def filter_fig(name_of_water_filter, locations_filter, time_range_selector):
     min_date_to_show = datetime.now().date() - timedelta(days=eval(time_range_selector))
     selected_waters = (
-        water_temps[["name_of_water", "location", "water_temp_celsius", "date_published"]]
+        water_temps[
+            ["name_of_water", "location", "water_temp_celsius", "date_published"]
+        ]
         .loc[
             (water_temps["name_of_water"] == name_of_water_filter)
             & (water_temps["location"].isin(locations_filter))
@@ -158,7 +164,9 @@ def filter_fig(name_of_water_filter, locations_filter, time_range_selector):
 )
 def populate_location_dropdown(name_of_water):
     locations = pd.unique(
-        water_temps.loc[water_temps["name_of_water"] == name_of_water]["location"].values
+        water_temps.loc[water_temps["name_of_water"] == name_of_water][
+            "location"
+        ].values
     )
     return (
         [{"label": location, "value": location} for location in locations],
