@@ -20,4 +20,6 @@ COPY dbt_project.yml dbt_project.yml
 COPY dbt dbt
 COPY src src
 
-CMD ["python", "-m", "src.dashboard.app"]
+EXPOSE 8080
+
+CMD ["uv", "run", "python", "-m", "src.dashboard.app"]
