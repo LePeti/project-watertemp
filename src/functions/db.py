@@ -15,9 +15,11 @@ def query_water_temps_unique_heroku():
 
 
 def query_water_temps_unique():
-    db_string = concat_conn_string()
+    db_string = concat_gcp_conn_string()
     engine = create_engine(db_string)
-    query_string = f"SELECT * FROM {os.getenv('PG_DB_NAME')}.public.water_temp_unique"
+    query_string = (
+        f"SELECT * FROM {os.getenv('GCP_PG_DB_NAME')}.public.water_temp_unique"
+    )
     with engine.connect() as con:
         water_temps = pd.read_sql(query_string, con)
     water_temps["water_temp_celsius"] = pd.to_numeric(water_temps["water_temp_celsius"])
@@ -28,9 +30,9 @@ def query_water_temps_unique():
 
 
 def query_table_stats():
-    db_string = concat_conn_string()
+    db_string = concat_gcp_conn_string()
     engine = create_engine(db_string)
-    query_string = f"SELECT * FROM {os.getenv('PG_DB_NAME')}.public.table_stats"
+    query_string = f"SELECT * FROM {os.getenv('GCP_PG_DB_NAME')}.public.table_stats"
     with engine.connect() as con:
         table_stats = pd.read_sql(query_string, con)
     table_stats["row_count"] = pd.to_numeric(table_stats["row_count"])
